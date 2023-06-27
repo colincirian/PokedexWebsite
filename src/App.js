@@ -1,12 +1,15 @@
-import './App.css';
-import React from 'react';
+import "./App.css";
+import React from "react";
 
-function App() {
+function loadingPage() {
   return (
-    <div className="home">
-      <h1>Pokemon Card Finder</h1>
+    <div className="loading-page">
+      <body>
+       
+      </body>
     </div>
   );
 }
+loadingPage();
 
-export default App;
+export default loadingPage;
