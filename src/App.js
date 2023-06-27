@@ -1,13 +1,13 @@
-import './App.css';
 import React from 'react';
+import { Route, Routes } from "react-router-dom"
+import { Home } from "./pages/Home";
 
-function loadingPage() {
+function App() {
   return (
-    <div className="home">
-      <h1>Pokemon Card Finder</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
-loadingPage();
 
-export default loadingPage;
+export default App;
