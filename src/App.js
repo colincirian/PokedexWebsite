@@ -1,12 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import * as webVitals from 'web-vitals';
-
+import React from 'react';
 
 function App() {
   return (
-    <div className="App">
-    <h1>hi</h1>
+    <div className="home">
+      <h1>Pokemon Card Finder</h1>
+ main
     </div>
   );
 }
