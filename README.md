@@ -2,11 +2,11 @@
 Welcome to our digital rolodex of rare and powerful Pokémon Cards! This project is the culmination of our love for Pokémon and the collectibles world. The application allows users to explore, search, and discover rare Pokémon cards. We aim to provide an easy-to-navigate platform for Pokémon card collectors and enthusiasts alike.
 
 # Table of Contents
-Usage and Features
-Configuration and Customization
-Documentation
-Contact Information
-Acknowledgments
+Usage and Features  
+Configuration and Customization  
+Documentation  
+Contact Information  
+Acknowledgments  
 
 # Usage and Features
 Our digital rolodex allows you to:
