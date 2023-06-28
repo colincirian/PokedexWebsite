@@ -22,10 +22,10 @@ User customization options include adding, removing, and editing Pokémon cards 
 For more detailed information
 
 # Contact Information
-For any queries or suggestions, you can reach us at:
-Email:
-Slack: 
-Discord:
+For any queries or suggestions, you can reach us at:  
+Email:  
+Slack:  
+Discord:  
 
 # Acknowledgments
 We would like to express our deepest gratitude to the Pokémon community for their ongoing support and inspiration. This project would not be possible without you.
