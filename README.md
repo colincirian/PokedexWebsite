@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Wikimon
 <<<<<<< HEAD
 
@@ -64,4 +65,7 @@ Discord:
 # Acknowledgments
 We would like to express our deepest gratitude to the Pokémon community for their ongoing support and inspiration. This project would not be possible without you.
 
+>>>>>>> main
+=======
+# milestone2
 >>>>>>> main
