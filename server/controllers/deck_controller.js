@@ -1,5 +1,3 @@
 // DEPENDENCIES
-const express = require('express')
-const baker = express.Router()
-const Baker = require('../models/baker.js')
-const bakerSeedData = require('../models/baker_seed.js')
+const express = require('express').Router();
+const deck = require('../models/baker.js');
