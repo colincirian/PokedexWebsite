@@ -20,16 +20,13 @@ View detailed information about each card.
 Add cards to your personal collection.
 Simply navigate to the homepage to start exploring!
 
+# Contact Information
+For any queries or suggestions, you can reach us at:  
+Email:  
+Slack:  
+Discord:  
 
-For any queries or suggestions, you can reach us at:
-Email:
-Slack:
-Discord:
-
-
-=======
 # milestone2
 
-=======
 Acknowledgments
 We would like to express our deepest gratitude to the Pokémon community for their ongoing support and inspiration. This project would not be possible without you.
