@@ -1,5 +1,5 @@
 const express = require("express");
-const Home = express.Router();
+const Sets = express.Router();
 
 // INDEX
 
@@ -23,4 +23,4 @@ const Home = express.Router();
 
 
 //EXPORT
-module.exports = Home;
+module.exports = Sets;
