@@ -48,9 +48,8 @@ function Pokedex() {
                 <Card key={index} style={{ width: '18rem' }}>
                     <Card.Img variant="top" src={item.Picture} />
                     <Card.Body>
-                        <Card.Title>{item.Name}</Card.Title>
+                        <Card.Title>{item.Name}, {item.Number}</Card.Title>
                         <Card.Text>
-                            Number: {item.Number} <br/>
                             Fact: {item.Fact} <br/>
                             Type: {item.Type} <br/>
                             Height: {item.Height} <br/>
