@@ -1,26 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Home from './Home';
 
-// card sets
-const Sets = () => {
-  const cardSets = [
-    { id: 1, name: 'Set 1', description: 'Description of Set 1' },
-    { id: 2, name: 'Set 2', description: 'Description of Set 2' },
-    { id: 3, name: 'Set 3', description: 'Description of Set 3' },
-    { id: 4, name: 'Set 4', description: 'Description of Set 4' },
-    { id: 5, name: 'Set 5', description: 'Description of Set 5' },
-  ];
+const CardBundles = () => {
+  const [bundles, setBundles] = useState([]);
+
+  useEffect(() => {
+    // Fetch card bundles from the API
+    const fetchCardBundles = async () => {
+      try {
+        const response = await fetch('https://api.pokemontcg.io/v2/sets?q=series:sword&series:shield');
+        const data = await response.json();
+
+        // Set the fetched bundles in the state
+        setBundles(data.data);
+
+        // Fetch prices for card sets
+        const bundlePrices = await Promise.all(
+          data.data.map(async (bundle) => {
+            const priceResponse = await fetch(`https://api.pokemontcg.io/v2/prices?q=set.id:${bundle.id}`);
+            const priceData = await priceResponse.json();
+            const bundlePriceData = priceData.data[0];
+            return {
+              ...bundle,
+              price: bundlePriceData && bundlePriceData.tcgplayer && bundlePriceData.tcgplayer.prices && bundlePriceData.tcgplayer.prices.normal && bundlePriceData.tcgplayer.prices.normal.mid
+                ? bundlePriceData.tcgplayer.prices.normal.mid
+                : 'N/A',
+            };
+          })
+        );
+
+        // Update the bundles with the fetched prices
+        setBundles(bundlePrices);
+      } catch (error) {
+        console.error('Error fetching card bundles:', error);
+      }
+    };
+
+    fetchCardBundles();
+  }, []);
 
   return (
     <div>
-      <h1>Sets</h1>
-      {cardSets.map((set) => (
-        <div key={set.id}>
-          <h2>{set.name}</h2>
-          <p>{set.description}</p>
-        </div>
-      ))}
+      <Home /> {/* Render the Home component for the navigation bar */}
+      <h1>Card Bundles</h1>
+      <ul>
+        {bundles.map((bundle) => (
+          <li key={bundle.id}>
+            <h2>{bundle.name}</h2>
+            <img src={bundle.images.logo} alt={bundle.name} />
+            <p>Series: {bundle.series}</p>
+            <p>Total Cards: {bundle.total}</p>
+            <p>Price: {bundle.price || '¥20,206.89'}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Sets;
+export default CardBundles;
