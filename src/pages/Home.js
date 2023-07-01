@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 function Home() {
   const home = {
@@ -38,13 +40,13 @@ function Home() {
             </ul>
             <form class="d-flex" role="search">
               <input
-                class="form-control me-2"
+                class="form-control me-2 search-input"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button class="btn btn-outline-success" type="submit">
-                Search
+              <button class="btn btn-outline-success search-button" type="submit">
+                <FontAwesomeIcon icon={faSearch} />
               </button>
             </form>
           </div>
