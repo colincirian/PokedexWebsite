@@ -1,11 +1,18 @@
 import React from 'react';
-import Home from './Home';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Sets from './pages/Sets';
+import Pokedex from "./pages/Pokedex";
 
 function App() {
+
   return (
-    <div className="App">
-      <h1></h1>
-      <Home />
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Sets" element={<Sets />} />
+        <Route path="/Pokedex" element={<Pokedex />} />
+      </Routes>
     </div>
   );
 }

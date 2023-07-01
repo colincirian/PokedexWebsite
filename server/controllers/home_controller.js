@@ -1,19 +1,28 @@
-const home = require("express").Router();
-const db = require("../models");
+const express = require("express");
+const Home = express.Router();
 
-home.get("/", async (req, res) => {
-  try {
-    const foundStages = await Stage.findAll({
-      where: {
-        stage_name: {
-          [Op.like]: `%${req.query.stage_name ? req.query.stage_name : ""}%`,
-        },
-      },
-    });
-    res.status(200).json(foundStages);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+// INDEX
+Home.get( '/', (req, res) => {
+  
+})
 
-module.exports = home;
+
+
+// SHOW
+
+
+
+
+// DELETE
+
+
+
+
+// GET
+
+
+
+
+
+//EXPORT
+module.exports = Home;
