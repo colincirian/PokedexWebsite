@@ -40,7 +40,7 @@ const CardBundles = () => {
   }, []);
 
   return (
-    <div>
+    <div class>
       <Home /> {/* Render the Home component for the navigation bar */}
       <h1>Card Bundles</h1>
       <ul>

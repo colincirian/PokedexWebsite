@@ -27,14 +27,14 @@ function Home() {
           </button>
           <Link class="navbar-brand" to="/Home">Poke Website</Link>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-link">
+              <li class="nav-link">
                 <Link class="nav-link active" to="/">Home</Link>
               </li>
-              <li class="nav-item">
+              <li class="nav-link">
                 <Link class="nav-link" to="/sets">Sets</Link>
               </li>
-              <li class="nav-item">
+              <li class="nav-link">
               <Link class="nav-link" to="/Pokedex">Pokedex</Link>
               </li>
             </ul>
