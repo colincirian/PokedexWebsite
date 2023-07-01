@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import App from '../App';
+
+import '../App.css';
 
 const CardBundles = () => {
   const [bundles, setBundles] = useState([]);
