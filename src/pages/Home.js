@@ -35,6 +35,9 @@ function Home() {
               <li class="nav-item">
               <Link class="nav-link" to="/Pokedex">Pokedex</Link>
               </li>
+              <li class="nav-item">
+              <Link class="nav-link" to="/Login">Login</Link>
+              </li>
             </ul>
             <form class="d-flex" role="search">
               <input

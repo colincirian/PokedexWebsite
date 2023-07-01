@@ -4,6 +4,7 @@ import Home from './Home';
 
 const CardBundles = () => {
   const [bundles, setBundles] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     // Fetch card bundles from the API
@@ -14,24 +15,6 @@ const CardBundles = () => {
 
         // Set the fetched bundles in the state
         setBundles(data.data);
-
-        // Fetch prices for card sets
-        const bundlePrices = await Promise.all(
-          data.data.map(async (bundle) => {
-            const priceResponse = await fetch(`https://api.pokemontcg.io/v2/prices?q=set.id:${bundle.id}`);
-            const priceData = await priceResponse.json();
-            const bundlePriceData = priceData.data[0];
-            return {
-              ...bundle,
-              price: bundlePriceData && bundlePriceData.tcgplayer && bundlePriceData.tcgplayer.prices && bundlePriceData.tcgplayer.prices.normal && bundlePriceData.tcgplayer.prices.normal.mid
-                ? bundlePriceData.tcgplayer.prices.normal.mid
-                : 'N/A',
-            };
-          })
-        );
-
-        // Update the bundles with the fetched prices
-        setBundles(bundlePrices);
       } catch (error) {
         console.error('Error fetching card bundles:', error);
       }
@@ -40,9 +23,60 @@ const CardBundles = () => {
     fetchCardBundles();
   }, []);
 
+  useEffect(() => {
+    // Fetch user data or check session to determine if user is logged in
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/user');
+        const data = await response.json();
+        if (data.user) {
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setUser(data.user);
+      } else {
+        console.error('Login failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/logout');
+      const data = await response.json();
+      if (response.ok) {
+        setUser(null);
+      } else {
+        console.error('Logout failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <div>
-      <Home /> {/* Render the Home component for the navigation bar */}
+      <Home user={user} onLogin={handleLogin} onLogout={handleLogout} /> {/* Render the Home component with user authentication */}
       <h1>Card Bundles</h1>
       <ul>
         {bundles.map((bundle) => (
