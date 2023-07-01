@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import React, { useState,  } from "react";
+
 import Axios from "axios";
 
 function Pokedex() {
     const [pokemonName, setPokemonName] = useState("")
-    const [pokemon, setPokemon] = useState({})
+    const [pokemonChosen, setPokemonChosen] = useState(false);
+    const [pokemon, setPokemon] = useState({
+        name: "",
+        species: "",
+        img: "",
+        hp: "",
+        attack: "",
+        defense: "",
+        type: "",
+    });
 
     const searchPokemon = () => {
         Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then(
             (response) => {
-                setPokemonName({
+                setPokemon({
                     name: pokemonName, 
                     species: response.data.species.name,
                     img: response.data.sprites.front_default,
@@ -17,7 +26,8 @@ function Pokedex() {
                     attack: response.data.stats[1].base_stat, 
                     defense: response.data.stats[2].base_stat,
                     type: response.data.types[0].type.name,
-                })
+                });
+                setPokemonChosen(true);
             }
         );
     };
@@ -35,7 +45,15 @@ return(
             <button onClick={searchPokemon}>Search Pokemon</button>
          </div>
          <div>
-            
+            <div className="DisplaySection">{!pokemonChosen ? (<h1> Choose a Pokemon</h1>) :  (
+            <>
+            <h1>{pokemon.name}</h1>
+            <img src={pokemon.img} alt="pokemonPics"/>
+            <h3>species: {pokemon.species}</h3>
+            <h3>type: {pokemon.type}</h3>
+            </>
+            )}
+            </div>
          </div>
     </div>
 );

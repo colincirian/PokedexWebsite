@@ -5,6 +5,7 @@ import Navbar from './pages/Navbar';
 import Pokedex from './pages/Pokedex';
 import Sets from './pages/Sets';
 
+
 function App() {
   return (
     <div className="App">
