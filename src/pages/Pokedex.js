@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createClient } from '@supabase/supabase-js'
 import Card from 'react-bootstrap/Card';
 import FormControl from 'react-bootstrap/FormControl';
@@ -11,10 +11,6 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 function Pokedex() {
     const [pokemon, setPokemon] = useState([]);
     const [search, setSearch] = useState('');
-
-    useEffect(() => {
-        fetchPokemon('');
-    }, []);
 
     const fetchPokemon = async (searchTerm) => {
         console.log("Fetching Pokemon with term: ", searchTerm);
