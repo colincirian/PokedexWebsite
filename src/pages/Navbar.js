@@ -7,10 +7,13 @@ function Navbar() {
         <a class="navbar-brand">Navbar</a>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" />
-          <button 
+          <button
             class="btn btn-outline-success" 
-            type="submit">
+            type="submit"/>
               Search Pokemon
+          <input class="form-control me-2 search-input" type="search" placeholder="Search..."/>
+          <button class="btn btn-outline-success search-button" type="submit">
+            Search
           </button>
         </form>
       </div>{" "}
