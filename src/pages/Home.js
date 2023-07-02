@@ -1,12 +1,13 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import "../App.css";
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 function Home() {
-  const home = {
-    backgroundColor: 'black',
-    color: 'white',
-    fontSize: '25px'
-  };
 
   return (
     <div className="homepage" style={home}>
@@ -25,14 +26,14 @@ function Home() {
           </button>
           <Link class="navbar-brand" to="/Home">Poke Website</Link>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-link">
+              <li class="nav-link">
                 <Link class="nav-link active" to="/">Home</Link>
               </li>
-              <li class="nav-item">
+              <li class="nav-link">
                 <Link class="nav-link" to="/sets">Sets</Link>
               </li>
-              <li class="nav-item">
+              <li class="nav-link">
               <Link class="nav-link" to="/Pokedex">Pokedex</Link>
               </li>
               <li class="nav-item">
@@ -41,13 +42,13 @@ function Home() {
             </ul>
             <form class="d-flex" role="search">
               <input
-                class="form-control me-2"
+                class="form-control me-2 search-input"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button class="btn btn-outline-success" type="submit">
-                Search
+              <button class="btn btn-outline-success search-button" type="submit">
+                <FontAwesomeIcon icon={faSearch} />
               </button>
             </form>
           </div>
