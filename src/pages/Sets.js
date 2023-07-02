@@ -77,19 +77,9 @@ const CardBundles = () => {
   };
 
   return (
-
-    <div class>
-      <Home /> {/* Render the Home component for the navigation bar */}
-      <h1>Card Bundles</h1>
-      <ul>
-
-    <div
-      style={{
-        background: '#0B1B3D',
-      }}
-    >
+    <div>
       <Home user={user} onLogin={handleLogin} onLogout={handleLogout} />
-      <h1 style={{ color: '#333', fontSize: '24px', marginBottom: '10px' }}>Card Bundles</h1>
+      <h1>Card Bundles</h1>
       <ul
         style={{
           display: 'grid',
@@ -98,7 +88,7 @@ const CardBundles = () => {
           listStyle: 'none',
           padding: 0,
         }}
-
+      >
         {bundles.map((bundle) => (
           <li
             key={bundle.id}
