@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
-
-import React from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 function Home() {
+  const home = {
+    backgroundColor: 'black',
+    color: 'white',
+    fontSize: '25px'
+  };
+
 
   return (
     <div className="homepage" style={home}>
