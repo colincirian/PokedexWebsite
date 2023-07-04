@@ -1,13 +1,24 @@
 import React from "react";
+
+import Navbar from "./Navbar";
+//import { Link } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import "../App.css";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+
 function Home() {
   return (
     <div className="homepage">
+
+      <div>
+        <Navbar />
+        <h1>HOMEPAGE</h1>
+      </div>
+
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <button
@@ -51,8 +62,9 @@ function Home() {
           </div>
         </div>
       </nav>
+
     </div>
-  );
+  )
 }
 
 export default Home;
