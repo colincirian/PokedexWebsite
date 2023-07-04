@@ -46,28 +46,81 @@ const Login = () => {
     }
   };
 
+  const loginContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    backgroundColor: '#0B1B3D', // Set the background color (RGB: 255, 159, 3)
+  };
+
+  const loginFormStyle = {
+    backgroundColor: '#f2f2f2',
+    padding: '30px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    width: '350px',
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '10px',
+    marginBottom: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    fontSize: '16px',
+  };
+
+  const buttonStyle = {
+    width: '100%',
+    padding: '10px',
+    border: 'none',
+    borderRadius: '5px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    backgroundColor: '#0B1B3D',
+    color: '#fff',
+    cursor: 'pointer',
+  };
+
   return (
-    <div>
-      <h1>Login</h1>
-      {/* Your login form inputs and submit button */}
-      <form>
-        <input
-          type="email"
-          placeholder="Email"
-          value={state.email}
-          onChange={(e) => setState({ ...state, email: e.target.value })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={state.password}
-          onChange={(e) => setState({ ...state, password: e.target.value })}
-        />
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </form>
-    </div>
+    <>
+      <style>{`
+        body {
+          margin: 0;
+          background-color: rgb(255, 159, 3);
+        }
+      `}</style>
+      <div style={loginContainerStyle}>
+        <div style={loginFormStyle}>
+          <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h1>
+          {/* Your login form inputs and submit button */}
+          <form>
+            <div style={{ marginBottom: '10px' }}>
+              <input
+                type="email"
+                placeholder="Email"
+                value={state.email}
+                onChange={(e) => setState({ ...state, email: e.target.value })}
+                style={inputStyle}
+              />
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <input
+                type="password"
+                placeholder="Password"
+                value={state.password}
+                onChange={(e) => setState({ ...state, password: e.target.value })}
+                style={inputStyle}
+              />
+            </div>
+            <button type="button" onClick={handleLogin} style={buttonStyle}>
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 
