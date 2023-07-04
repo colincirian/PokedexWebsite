@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Navbar() {
   return (
     <div className="nav">
+      <h1>added h1</h1>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <button
