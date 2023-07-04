@@ -51,6 +51,7 @@ return(
             <img src={pokemon.img} alt="pokemonPics"/>
             <h3>species: {pokemon.species}</h3>
             <h3>type: {pokemon.type}</h3>
+            <h3>attack: {pokemon.attack}</h3>
             </>
             )}
             </div>

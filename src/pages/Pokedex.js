@@ -36,7 +36,7 @@ function Pokedex() {
 
     return(
         <div>
-            <h1>Hello this is the Pokedex</h1>
+            <h1>Pokedex</h1>
             <FormControl 
                 type="text" 
                 placeholder="Search for Pokemon" 
@@ -48,7 +48,7 @@ function Pokedex() {
                 <Card key={index} style={{ width: '18rem' }}>
                     <Card.Img variant="top" src={item.Picture} />
                     <Card.Body>
-                        <Card.Title>{item.Name}, {item.Number}</Card.Title>
+                        <Card.Title>{item.Name} {item.Number}</Card.Title>
                         <Card.Text>
                             Fact: {item.Fact} <br/>
                             Type: {item.Type} <br/>
