@@ -1,6 +1,4 @@
-
 /* styles.css */
-
 .card {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -16,8 +14,6 @@
     padding: 20px;
   }
   
-
-=======
 body {
     background-color: #f2f2f2;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -35,8 +31,6 @@ h1 {
 div {
     display: block;
 }
-
-
 
 /* navbar */
 .navbar {
