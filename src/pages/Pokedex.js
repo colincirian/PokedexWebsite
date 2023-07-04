@@ -4,8 +4,8 @@ import { createClient } from '@supabase/supabase-js'
 import Card from 'react-bootstrap/Card';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import Home from './Home';
 
+// FETCHING FROM DATABASE
 const supabaseUrl = 'https://mpacxgtjfozgyrmvfgso.supabase.co';
 const supabaseKey = 'YOUR_SUPABASE_KEY'; // Replace with your Supabase key
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -38,7 +38,6 @@ function Pokedex() {
 
   return (
     <div>
-      <Home /> {/* Render the Home component for the navigation bar */}
       <h1>Hello, this is the Pokedex</h1>
       <FormControl
         type="text"
