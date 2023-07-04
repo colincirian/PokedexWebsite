@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Home from "./Home";
+import axios from "axios";
 
 function Pokedex() {
+  const Axios  = require('axios');
   const [pokemonName, setPokemonName] = useState("");
   const [pokemonChosen, setPokemonChosen] = useState(false);
   const [pokemon, setPokemon] = useState({
@@ -48,12 +51,12 @@ function Pokedex() {
           {!pokemonChosen ? (
             <h1>Choose a Pokemon</h1>
           ) : (
-            <>
+            <div>
               <h1>{pokemon.name}</h1>
               <img src={pokemon.img} alt="pokemonPics" />
               <h3>species: {pokemon.species}</h3>
               <h3>type: {pokemon.type}</h3>
-            </>
+            </div>
           )}
         </div>
       </div>
