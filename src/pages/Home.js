@@ -4,80 +4,70 @@ import "../App.css";
 //import { Link } from "react-router-dom";
 
 function Home() {
-  const card = {
-    width: "200px",
-    height: "230px",
-    display: "inline-block",
-    padding: "15px 25px",
-    margin: "10px 15px",
-    boxSizing: "border-box",
+  const container = {
+    backgroundColor: "#0B1B3D",
     width: "100%",
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px",
+    boxSizing: "border-box",
+  };
+
+  const cardStyle = {
+    backgroundColor: "#FFFFFF",
+    padding: "20px",
+    margin: "10px",
+    borderRadius: "5px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     cursor: "pointer"
   };
 
-  const background = {
-    backgroundColor: "#0B1B3D",
-    width: "100%",
-    height: "100vh"
+  const cardHoverStyle = {
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
   };
 
   return (
-    <div className="home-container" style={background}>
-      <div className="row">
-        <div className="column">
-          <h1>Pikachu</h1>
-          <p>
-            the leap into electronic typesetting, remaining essentially
-            unchanged. It was popularised in the 1960s with the release of
-            Letraset .
-          </p>
-          <button type="button">Explore</button>
-        </div>
-        <div className="column">
-          <div className="card" style={card}>
-            <h1>hello</h1>
-            <p>
-              the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset .
-            </p>
-          </div>
-          <div className="card" style={card}>
-            <h1>hello</h1>
-            <p>
-              the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset .
-            </p>
-          </div>
-          <div className="card" style={card}>
-            <h1>hello</h1>
-            <p>
-              the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset .
-            </p>
-          </div>
-          <div className="card" style={card}>
-            <h1>hello</h1>
-            <p>
-              the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset .
-            </p>
-          </div>
-          <div className="card" style={card}>
-            <h1>hello</h1>
-            <p>
-              the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset{" "}
-            </p>
-          </div>
-        </div>
+    <div style={container}>
+      <div className="card" style={{cardStyle, cardHoverStyle}}>
+        <h1>hello</h1>
+        <p>
+          The leap into electronic typesetting, remaining essentially
+          unchanged. It was popularized in the 1960s with the release of
+          Letraset.
+        </p>
+      </div>
+
+      <div className="card" style={cardStyle}>
+        <h1>hello</h1>
+        <p>
+          The leap into electronic typesetting, remaining essentially
+          unchanged. It was popularized in the 1960s with the release of
+          Letraset.
+        </p>
+      </div>
+
+      <div className="card" style={cardStyle}>
+        <h1>hello</h1>
+        <p>
+          The leap into electronic typesetting, remaining essentially
+          unchanged. It was popularized in the 1960s with the release of
+          Letraset.
+        </p>
+      </div>
+
+      <div className="card" style={cardStyle}>
+        <h1>hello</h1>
+        <p>
+          The leap into electronic typesetting, remaining essentially
+          unchanged. It was popularized in the 1960s with the release of
+          Letraset.
+        </p>
       </div>
     </div>
   );
 }
+
 
 export default Home;
