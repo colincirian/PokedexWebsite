@@ -6,8 +6,6 @@ Sets.get('/sets', (req, res) => {
     res.send('Get all sets')
 })
 
-
-
 // SHOW
 Sets.get('/:id', (req, res) => {
     const setID = req.params.id;
