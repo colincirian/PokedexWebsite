@@ -16,58 +16,59 @@ function Home() {
   };
 
   const cardStyle = {
-    backgroundColor: "#FFFFFF",
     padding: "20px",
     margin: "10px",
     borderRadius: "5px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-    cursor: "pointer"
+    cursor: "pointer",
   };
 
-  const cardHoverStyle = {
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+  const img = {
+    width: "400px",
+    height: "400px",
+    borderRadius: "2rem"
   };
 
   return (
-    <div style={container}>
-      <div className="card" style={{cardStyle, cardHoverStyle}}>
-        <h1>hello</h1>
-        <p>
-          The leap into electronic typesetting, remaining essentially
-          unchanged. It was popularized in the 1960s with the release of
-          Letraset.
-        </p>
+    <div className="" style={container}>
+      <div>
+        <h1>CATCH THOSE MFS</h1>
+        <a
+          href="https://pokemongolive.com/?hl=en"
+          style={cardStyle}
+        >
+          <img src="./images/pokemonGo.jpg" alt="pokemon-go" style={img} />
+        </a>
       </div>
 
-      <div className="card" style={cardStyle}>
-        <h1>hello</h1>
-        <p>
-          The leap into electronic typesetting, remaining essentially
-          unchanged. It was popularized in the 1960s with the release of
-          Letraset.
-        </p>
+      <div>
+        <h1>starter pack</h1>
+        <a
+          href="https://pokemongolive.com/?hl=en"
+          style={cardStyle}
+        >
+          <img src="./images/pokemonGo.jpg" alt="pokemon-go" style={img} />
+        </a>
       </div>
-
-      <div className="card" style={cardStyle}>
-        <h1>hello</h1>
-        <p>
-          The leap into electronic typesetting, remaining essentially
-          unchanged. It was popularized in the 1960s with the release of
-          Letraset.
-        </p>
+      
+      <div>
+        <h1>CATCH THOSE MFS</h1>
+        <a
+          href="https://pokemongolive.com/?hl=en"
+          style={cardStyle}
+        >
+          <img src="./images/pokemonGo.jpg" alt="pokemon-go" style={img} />
+        </a>
       </div>
-
-      <div className="card" style={cardStyle}>
+      
+      <div className="card" id="pokemon-go-link" style={cardStyle}>
         <h1>hello</h1>
         <p>
-          The leap into electronic typesetting, remaining essentially
-          unchanged. It was popularized in the 1960s with the release of
-          Letraset.
+          The leap into electronic typesetting, remaining essentially unchanged.
+          It was popularized in the 1960s with the release of Letraset.
         </p>
       </div>
     </div>
   );
 }
-
 
 export default Home;

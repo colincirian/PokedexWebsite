@@ -39,7 +39,7 @@ div {
     padding: 20px;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position:  fixed;
     height: 8em;
     width: 100vw;
 }
