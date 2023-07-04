@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 
 const Login = () => {
   const [state, setState] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const handleLogin = async () => {
     try {
@@ -11,7 +13,7 @@ const Login = () => {
 
       // Validate the input
       if (!email || !password) {
-        // Display an error message or handle the validation error
+        setError('Please enter both email and password.');
         return;
       }
 
@@ -37,11 +39,12 @@ const Login = () => {
       } else {
         // Authentication failed
         const errorData = await response.json();
+        setError('Authentication failed. Please try again.');
         console.error('Login failed:', errorData);
-        // Display an error message or handle the authentication failure
       }
     } catch (error) {
       // Handle network errors or other exceptions
+      setError('An error occurred during login. Please try again later.');
       console.error('Login error:', error);
     }
   };
@@ -50,8 +53,8 @@ const Login = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
-    backgroundColor: '#0B1B3D', // Set the background color (RGB: 255, 159, 3)
+    minHeight: '100vh',
+    backgroundColor: '#0B1B3D',
   };
 
   const loginFormStyle = {
@@ -88,13 +91,13 @@ const Login = () => {
       <style>{`
         body {
           margin: 0;
-          background-color: rgb(255, 159, 3);
+          background-color: #0B1B3D;
         }
       `}</style>
       <div style={loginContainerStyle}>
         <div style={loginFormStyle}>
           <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h1>
-          {/* Your login form inputs and submit button */}
+          {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
           <form>
             <div style={{ marginBottom: '10px' }}>
               <input
@@ -118,6 +121,9 @@ const Login = () => {
               Login
             </button>
           </form>
+          <p style={{ textAlign: 'center', marginTop: '10px' }}>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
         </div>
       </div>
     </>

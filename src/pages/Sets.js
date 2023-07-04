@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-import Home from './Home';
+import  Navbar  from './Navbar';
 
 const CardBundles = () => {
   const [bundles, setBundles] = useState([]);
@@ -113,7 +113,7 @@ const CardBundles = () => {
         }
       `}</style>
       <div>
-        <Home user={user} onLogin={handleLogin} onLogout={handleLogout} />
+        <Navbar user={user} onLogin={handleLogin} onLogout={handleLogout} />
         <h1 style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>
           Card Sets
         </h1>
