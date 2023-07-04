@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+
 import '../App.css';
+
+import Home from './Home';
+
 
 const CardBundles = () => {
   const [bundles, setBundles] = useState([]);
@@ -42,6 +46,7 @@ const CardBundles = () => {
 
   return (
     <div>
+      <Home /> {/* Render the Home component for the navigation bar */}
       <h1>Card Bundles</h1>
       <ul>
         {bundles.map((bundle) => (
