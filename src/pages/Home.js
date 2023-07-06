@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "./Navbar";
 import "../App.css";
 
 function Home() {
@@ -37,6 +38,7 @@ function Home() {
   const img = {
     width: "400px",
     height: "400px",
+    borderRadius: "2rem",
     borderRadius: "2rem",
   };
 

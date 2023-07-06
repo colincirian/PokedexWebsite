@@ -1,14 +1,6 @@
-// Pokedex.js
 import React, { useState } from "react";
-import { createClient } from '@supabase/supabase-js'
-import Card from 'react-bootstrap/Card';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
-
-// FETCHING FROM DATABASE
-const supabaseUrl = 'https://mpacxgtjfozgyrmvfgso.supabase.co';
-const supabaseKey = 'YOUR_SUPABASE_KEY'; // Replace with your Supabase key
-const supabase = createClient(supabaseUrl, supabaseKey);
+import supabase from '../Services/supabaseClient';
+import Navbar from "./Navbar";
 
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
@@ -36,44 +28,44 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-  return (
-    <div>
-      <h1>Hello, this is the Pokedex</h1>
-      <FormControl
-        type="text"
-        placeholder="Search for Pokemon"
-        value={search}
-        onChange={handleSearch}
-      />
-      <Button onClick={handleSearchClick}>Search</Button>
-      {pokemon.map((item, index) => (
-        <Card key={index} style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={item.Picture} />
-          <Card.Body>
-            <Card.Title>
-              {item.Name}, {item.Number}
-            </Card.Title>
-            <Card.Text>
-              Fact: {item.Fact} <br />
-              Type: {item.Type} <br />
-              Height: {item.Height} <br />
-              Weight: {item.Weight} <br />
-              Gender: {item.Gender} <br />
-              Category: {item.Category} <br />
-              Abilities: {item.Abilities} <br />
-              Weaknesses: {item.Weaknesses} <br />
-              Hit_points: {item.Hit_points} <br />
-              Attack: {item.Attack} <br />
-              Defense: {item.Defense} <br />
-              Special_attack: {item.Special_attack} <br />
-              Special_defense: {item.Special_defense} <br />
-              Speed: {item.Speed} <br />
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      ))}
-    </div>
-  );
+    return (
+        <div>
+            <Navbar />
+            <h1>Hello this is the Pokedex</h1>
+            <input
+                type="text" 
+                placeholder="Search for Pokemon" 
+                value={search} 
+                onChange={handleSearch}
+            />
+            <button onClick={handleSearchClick}>Search</button>
+            {pokemon.map((item, index) => 
+                <div key={index} style={{ width: '18rem' }}>
+                    <img src={item.Picture} alt={item.Name} />
+                    <div>
+                        <h2>{item.Name}</h2>
+                        <p>
+                            Number: {item.Number} <br/>
+                            Fact: {item.Fact} <br/>
+                            Type: {item.Type} <br/>
+                            Height: {item.Height} <br/>
+                            Weight: {item.Weight} <br/>
+                            Gender: {item.Gender} <br/>
+                            Category: {item.Category} <br/>
+                            Abilities: {item.Abilities} <br/>
+                            Weaknesses: {item.Weaknesses} <br/>
+                            Hit_points: {item.Hit_points} <br/>
+                            Attack: {item.Attack} <br/>
+                            Defense: {item.Defense} <br/>
+                            Special_attack: {item.Special_attack} <br/>
+                            Special_defense: {item.Special_defense} <br/>
+                            Speed: {item.Speed} <br/>
+                        </p>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default Pokedex;

@@ -7,6 +7,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Signup route
+app.post('/api/signup', (req, res) => {
+  // Perform your user registration logic here
+  const { firstName, lastName, email, password } = req.body;
+
+  // Example signup logic - create a new user in the database
+  // Replace this with your actual user registration implementation
+  // For simplicity, let's just return a success message
+  res.json({ message: 'User registration successful' });
+});
+
 // Login route
 app.post('/api/login', (req, res) => {
   // Perform your login authentication logic here
@@ -24,6 +35,6 @@ app.post('/api/login', (req, res) => {
 });
 
 // Start the server
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('Server is running on port 3001');
 });
