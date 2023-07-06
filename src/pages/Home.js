@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+//import Navbar from "./Navbar";
 import "../App.css";
 
 function Home() {
@@ -40,7 +40,7 @@ function Home() {
 
           <div>
             <h1>starter pack</h1>
-            <a href="https://pokemongolive.com/?hl=en" style={cardStyle}>
+            <a href="https://www.tcgplayer.com/categories/trading-and-collectible-card-games/pokemon?utm_campaign=18098386707&utm_source=google&utm_medium=cpc&utm_content=&utm_term=&adgroupid=&gclid=CjwKCAjwqZSlBhBwEiwAfoZUIEfYtgxVMMYk_VMdTKlCHCdpeEB0IdXmmRLEJo1fp1wKErObJufoIBoC4M4QAvD_BwE" style={cardStyle}>
               <img src="./images/pokemonGo.jpg" alt="pokemon-go" style={img} />
             </a>
           </div>
