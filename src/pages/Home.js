@@ -1,5 +1,5 @@
 import React from "react";
-//import Navbar from "./Navbar";
+import Navbar from "./Navbar";
 import "../App.css";
 
 function Home() {
@@ -29,6 +29,7 @@ function Home() {
 
   return (
     <div>
+     <Navbar />
       <div className="" style={container}>
         <div className="homepage">
           <div>
