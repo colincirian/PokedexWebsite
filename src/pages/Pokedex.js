@@ -31,7 +31,8 @@ function Pokedex() {
     return (
         <div>
             <Navbar />
-            <h1>Hello this is the Pokedex</h1>
+            <h1>Pokedex</h1>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2kMTOjqqKJCahCRP-9q9RK_yrm5fPXFwSA&usqp=CAU"></img>
             <input
                 type="text" 
                 placeholder="Search for Pokemon" 
