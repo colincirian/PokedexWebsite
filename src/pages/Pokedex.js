@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import supabase from '../Services/supabaseClient';
 import Navbar from "./Navbar";
 
+
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
@@ -29,17 +30,32 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-  const addToTeam = (pokemon) => {
-    setTeam((prevTeam) => [...prevTeam, pokemon]);
-  };
 
-  const removeFromTeam = (pokemon) => {
-    setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
-  };
+const removeFromTeam = (pokemon) => {
+  setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+};
+
+const isPokemonInTeam = (pokemon) => {
+  return team.some((item) => item.Name === pokemon.Name);
+};
+
+const addToTeam = (pokemon) => {
+  if (team.length >= 6) {
+    alert('Team is already full!');
+    return;
+  }
+  if (isPokemonInTeam(pokemon)) {
+    alert(`${pokemon.Name} is already in the team!`);
+    return;
+  }
+  setTeam((prevTeam) => [...prevTeam, pokemon]);
+};
+
 
   return (
     <div className="pokedex-container">
       <Navbar />
+      
       <h1 className="pokedex-heading">Pokedex</h1>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2kMTOjqqKJCahCRP-9q9RK_yrm5fPXFwSA&usqp=CAU" alt="Pokedex" className="pokedex-image" />
       <div className="search-bar">
@@ -66,6 +82,28 @@ function Pokedex() {
           ))}
         </div>
       </div>
+      <div className="pokedex-container">
+    {/* ... */}
+    <div className="team-container">
+      {/* ... */}
+      <div className="search-results-container">
+        {/* ... */}
+        <div className="search-results-pokemon">
+          {pokemon.map((pokemon, index) => (
+            <div key={index} className="search-results-pokemon-card">
+              {/* ... */}
+              <button
+                onClick={() => addToTeam(pokemon)}
+                disabled={isPokemonInTeam(pokemon) || team.length >= 6}
+              >
+                Add to Team
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
 
       <div className="search-results-container">
         <h2 className="search-results-heading">Search Results</h2>
