@@ -40,16 +40,13 @@ const Navbar = () => {
                                 <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/sets">Sets</Link>
+                                <Link className="nav-link" to="/sets">TCG</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/Pokedex">Pokedex</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/Login">Login</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/SignUp">Sign Up</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" onClick={handleLogout}>Logout</Link>
