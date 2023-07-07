@@ -1,30 +1,82 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "../App.css";
 
 function Home() {
-  const box = {
-    width: "100px",
-    height: "100px",
-    backgroundColor: "blue",
+
+  const anchorClickEvent = () => {
+    console.log("element clicked!");
   };
 
-  return (
-    <div className="root" style={{ backgroundColor: "black", width: "100%", minHeight: "100vh" }}>
-      <div className="nav">
-        Navbar
-      </div>
+  const screen = {
+    width: "100vw",
+    minHeight: "100vh",
+    backgroundColor: "#020036",
+    margin: "auto",
+    padding: "0",
+  };
 
-      <main id="main" className="main">
-        <div id="home" style={box}>first link</div>
-        <div id="card-website-link" style={box}></div>
-        <div id="other-link" style={box}></div>
-      </main>
-    </div>
+  const boxes = {
+    width: "200px",
+    height: "50px",
+    borderRadius: "1rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+    border: "solid white 4px",
+    margin: "1rem",
+    color: "white",
+    fontSize: "20px",
+    cursor: "pointer"
+  };
+
+  const main_container = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    margin: "0"
+  };
+
+  const background_image = {
+    backgroundImage: "url('./images/pikachu.jpg",
+    width: "90%",
+    height: "90vh",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "auto",
+    display: "flex"
+  }
+
+  const anchor = {
+    textDecoration: "none",
+    color: "white",
+  };
+  
+
+  return (
+      <div style={screen}>
+        <div style={background_image}>
+          <main id="main" style={main_container}>
+                <div id="home" style={boxes}>
+                  <a style={anchor} href="https://pokemongolive.com/?hl=en">Pokedex</a>
+                  </div>
+
+                <div id="card-website-link" style={boxes}>Card Sets</div>
+
+                <div id="other-link" style={boxes}>
+                  <a style={anchor} href=""></a>
+                </div>
+
+                <div id="other-link" style={boxes}>hello</div>
+          </main>
+        </div>
+      </div>
   );
 }
 
 export default Home;
-
 
 //     <div>
 //       <Navbar />
