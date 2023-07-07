@@ -48,9 +48,7 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/Login">Login</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/testPokedex">TestPokedex</Link>
-                            </li>
+                         
                             <li className="nav-item">
                                 <Link className="nav-link" onClick={handleLogout}>Logout</Link>
                             </li>
