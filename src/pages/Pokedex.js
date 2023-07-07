@@ -5,18 +5,19 @@ import Navbar from "./Navbar";
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
+  const [team, setTeam] = useState([]);
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
-    let { data: pokemon_stats, error } = await supabase
+    let { data: pokemonStats, error } = await supabase
       .from('pokemon_stats')
       .select('*')
       .ilike('Name', `%${searchTerm}%`);
     if (error) {
       console.log("Data fetch error: ", error);
     } else {
-      console.log("Fetched data: ", pokemon_stats);
-      setPokemon(pokemon_stats);
+      console.log("Fetched data: ", pokemonStats);
+      setPokemon(pokemonStats);
     }
   };
 
@@ -28,45 +29,77 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-    return (
-        <div>
-            <Navbar />
-            <h1>Pokedex</h1>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2kMTOjqqKJCahCRP-9q9RK_yrm5fPXFwSA&usqp=CAU"></img>
-            <input
-                type="text" 
-                placeholder="Search for Pokemon" 
-                value={search} 
-                onChange={handleSearch}
-            />
-            <button onClick={handleSearchClick}>Search</button>
-            {pokemon.map((item, index) => 
-                <div key={index} style={{ width: '18rem' }}>
-                    <img src={item.Picture} alt={item.Name} />
-                    <div>
-                        <h2>{item.Name}</h2>
-                        <p>
-                            Number: {item.Number} <br/>
-                            Fact: {item.Fact} <br/>
-                            Type: {item.Type} <br/>
-                            Height: {item.Height} <br/>
-                            Weight: {item.Weight} <br/>
-                            Gender: {item.Gender} <br/>
-                            Category: {item.Category} <br/>
-                            Abilities: {item.Abilities} <br/>
-                            Weaknesses: {item.Weaknesses} <br/>
-                            Hit_points: {item.Hit_points} <br/>
-                            Attack: {item.Attack} <br/>
-                            Defense: {item.Defense} <br/>
-                            Special_attack: {item.Special_attack} <br/>
-                            Special_defense: {item.Special_defense} <br/>
-                            Speed: {item.Speed} <br/>
-                        </p>
-                    </div>
-                </div>
-            )}
+  const addToTeam = (pokemon) => {
+    setTeam((prevTeam) => [...prevTeam, pokemon]);
+  };
+
+  const removeFromTeam = (pokemon) => {
+    setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+  };
+
+  return (
+    <div className="pokedex-container">
+      <Navbar />
+      <h1 className="pokedex-heading">Pokedex</h1>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2kMTOjqqKJCahCRP-9q9RK_yrm5fPXFwSA&usqp=CAU" alt="Pokedex" className="pokedex-image" />
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search for Pokemon"
+          value={search}
+          onChange={handleSearch}
+        />
+        <button onClick={handleSearchClick}>Search</button>
+      </div>
+
+      <div className="team-container">
+        <h2 className="team-heading">Team</h2>
+        <div className="team-pokemon">
+          {team.map((pokemon, index) => (
+            <div key={index} className="team-pokemon-card">
+              <img src={pokemon.Picture} alt={pokemon.Name} />
+              <div>
+                <h3>{pokemon.Name}</h3>
+                <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
+              </div>
+            </div>
+          ))}
         </div>
-    )
+      </div>
+
+      <div className="search-results-container">
+        <h2 className="search-results-heading">Search Results</h2>
+        <div className="search-results-pokemon">
+          {pokemon.map((pokemon, index) => (
+            <div key={index} className="search-results-pokemon-card">
+              <img src={pokemon.Picture} alt={pokemon.Name} />
+              <div>
+                <h3>{pokemon.Name}</h3>
+                <p>
+                  Number: {pokemon.Number} <br />
+                  Fact: {pokemon.Fact} <br />
+                  Type: {pokemon.Type} <br />
+                  Height: {pokemon.Height} <br />
+                  Weight: {pokemon.Weight} <br />
+                  Gender: {pokemon.Gender} <br />
+                  Category: {pokemon.Category} <br />
+                  Abilities: {pokemon.Abilities} <br />
+                  Weaknesses: {pokemon.Weaknesses} <br />
+                  Hit Points: {pokemon.Hit_points} <br />
+                  Attack:{pokemon.Attack} <br />
+                  Defense: {pokemon.Defense} <br />
+                  Special Attack: {pokemon.Special_attack} <br />
+                  Special Defense: {pokemon.Special_defense} <br />
+                  Speed: {pokemon.Speed} <br />
+                </p>
+                <button onClick={() => addToTeam(pokemon)}>Add to Team</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Pokedex;
