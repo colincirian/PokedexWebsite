@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import supabase from "../Services/supabaseClient";
 
 const Login = () => {
   const [state, setState] = useState({ email: "", password: "" });
@@ -10,43 +11,31 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const { email, password } = state;
-
+  
       // Validate the input
       if (!email || !password) {
         // Display an error message or handle the validation error
         return;
       }
-
-      // Create form data
-      let formData = new URLSearchParams();
-      formData.append('email', email);
-      formData.append('password', password);
-
-      // Send a request to the backend server to authenticate the user
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData,
+  
+      // Sign in with Supabase
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
       });
-
-      // Handle the response from the server
-      if (response.ok) {
-        // Authentication successful
-        const { token } = await response.json();
-
-        // Store the token in local storage or a browser cookie
-        localStorage.setItem("token", token);
-
-        // Redirect the user to the desired page or update the UI accordingly
-        navigate("/dashboard");
-      } else {
-        // Authentication failed
-        const errorData = await response.json();
-        console.error("Login failed:", errorData);
-        // Display an error message or handle the authentication failure
+  
+      if (error) {
+        console.error("Login failed:", error.message);
+        alert("Login failed! Please check your credentials and try again.");
+        return;
       }
+  
+      // Authentication successful
+      // Store the token in local storage or a browser cookie
+      localStorage.setItem("token", data.access_token);
+  
+      // Redirect the user to the desired page or update the UI accordingly
+      navigate("/");
     } catch (error) {
       // Handle network errors or other exceptions
       console.error("Login error:", error);
