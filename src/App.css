@@ -61,6 +61,124 @@
   cursor: pointer;
 }
 
+/* team builder */
+
+.team-container {
+  margin-top: 20px;
+}
+
+.team-heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.team-pokemon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.team-pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.team-pokemon-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.team-pokemon-card div {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.team-pokemon-card h3 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.team-pokemon-card button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-results-container {
+  margin-top: 20px;
+}
+
+.search-results-heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.search-results-pokemon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-results-pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.search-results-pokemon-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.search-results-pokemon-card div {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.search-results-pokemon-card h3 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.search-results-pokemon-card p {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.search-results-pokemon-card button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ... rest of the CSS styles */
+
+
 /* ... rest of the CSS styles */
 
 
