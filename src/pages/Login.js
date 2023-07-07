@@ -17,6 +17,9 @@ const Login = () => {
         // Display an error message or handle the validation error
         return;
       }
+
+      // console.log("Form Data:", { email, password }); // Log the form data
+
   
       // Sign in with Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
