@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import supabase from '../Services/supabaseClient';
 import Navbar from "./Navbar";
 
-
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
@@ -30,34 +29,44 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-//PokemonTeamBuilder
-const removeFromTeam = (pokemon) => {
-  setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
-};
+  const removeFromTeam = (pokemon) => {
+    setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+  };
 
-const isPokemonInTeam = (pokemon) => {
-  return team.some((item) => item.Name === pokemon.Name);
-};
+  const isPokemonInTeam = (pokemon) => {
+    return team.some((item) => item.Name === pokemon.Name);
+  };
 
-const addToTeam = (pokemon) => {
-  if (team.length >= 6) {
-    alert('Team is already full!');
-    return;
-  }
-  if (isPokemonInTeam(pokemon)) {
-    alert(`${pokemon.Name} is already in the team!`);
-    return;
-  }
-  setTeam((prevTeam) => [...prevTeam, pokemon]);
-};
-
+  const addToTeam = (pokemon) => {
+    if (team.length >= 6) {
+      alert('Team is already full!');
+      return;
+    }
+    if (isPokemonInTeam(pokemon)) {
+      alert(`${pokemon.Name} is already in the team!`);
+      return;
+    }
+    setTeam((prevTeam) => [...prevTeam, pokemon]);
+  };
 
   return (
     <div className="pokedex-container">
       <Navbar />
-      
       <h1 className="pokedex-heading">Pokedex</h1>
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA2kMTOjqqKJCahCRP-9q9RK_yrm5fPXFwSA&usqp=CAU" alt="Pokedex" className="pokedex-image" />
+      <div className="pokedex-image-container">
+        <img
+          src="https://e0.pxfuel.com/wallpapers/1023/397/desktop-wallpaper-pokemon-pokedex-background.jpg"
+          alt="Pokedex"
+          className="pokedex-image"
+        />
+        <div className="pokedex-pokemon-container">
+          {pokemon.map((pokemon, index) => (
+            <div key={index} className="pokedex-pokemon-card">
+              <img src={pokemon.Picture} alt={pokemon.Name} />
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="search-bar">
         <input
           type="text"
@@ -67,7 +76,6 @@ const addToTeam = (pokemon) => {
         />
         <button onClick={handleSearchClick}>Search</button>
       </div>
-        
       <div className="team-container">
         <h2 className="team-heading">Team</h2>
         <div className="team-pokemon">
@@ -82,31 +90,12 @@ const addToTeam = (pokemon) => {
           ))}
         </div>
       </div>
-      <div className="pokedex-container">
-    {/* ... */}
-    <div className="team-container">
-      {/* ... */}
-      <div className="search-results-container">
-        {/* ... */}
-        <div className="search-results-pokemon">
-          {pokemon.map((pokemon, index) => (
-            <div key={index} className="search-results-pokemon-card">
-              {/* ... */}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-              
       <div className="search-results-container">
         <h2 className="search-results-heading">Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
-
-            
-              <img src={pokemon.Picture} alt={pokemon.Name} />
+              
               <div>
                 <h3>{pokemon.Name}</h3>
                 <p>
@@ -120,19 +109,18 @@ const addToTeam = (pokemon) => {
                   Abilities: {pokemon.Abilities} <br />
                   Weaknesses: {pokemon.Weaknesses} <br />
                   Hit Points: {pokemon.Hit_points} <br />
-                  Attack:{pokemon.Attack} <br />
+                  Attack: {pokemon.Attack} <br />
                   Defense: {pokemon.Defense} <br />
                   Special Attack: {pokemon.Special_attack} <br />
                   Special Defense: {pokemon.Special_defense} <br />
                   Speed: {pokemon.Speed} <br />
                 </p>
-                
                 <button
-                onClick={() => addToTeam(pokemon)}
-                disabled={isPokemonInTeam(pokemon) || team.length >= 6}
-              >
-                Add to Team
-              </button>
+                  onClick={() => addToTeam(pokemon)}
+                  disabled={isPokemonInTeam(pokemon) || team.length >= 6}
+                >
+                  Add to Team
+                </button>
               </div>
             </div>
           ))}

@@ -1,5 +1,70 @@
+/* pokedex */
+.pokedex-container {
+ 
+}
 
-/* styles.css */
+.pokedex-image-container {
+  position: relative;
+  width: 100%;
+}
+
+.pokedex-image {
+  width: 100%;
+  max-height: 400px;
+}
+
+.pokedex-pokemon-container {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pokedex-pokemon-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar input {
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ... rest of the CSS styles */
+
+
+/* home cards */
 .card {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -15,8 +80,20 @@
   padding: 20px;
 }
 
+
+/* general */
+.poke-container {
+  background: rgba(255, 255, 255, 0.228);
+  width: 90vw;
+  border-radius: 10px;
+  margin: 2rem auto;
+  padding: 1rem;
+  box-shadow: 0 0 5px #c3c3c3;
+}
+
+
 body {
-  background-color: #f2f2f2;
+  background-color: #0B1B3D;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
   padding: 0;
@@ -36,87 +113,106 @@ div {
 
 /* Navbar */
 
-.navbar {
-background: radial-gradient(ellipse at center, #3d3d3d 0%, #1e1e1e 57%);
-color: #fff;
-padding: 20px;
-align-items: center;
-justify-content: space-between;
-position: relative;
-height: 8em;
-width: 100vw;
+
+.navbar-container {
+  width: 100%;
 }
 
+.navbar {
+  background: radial-gradient(ellipse at center, #3d3d3d 0%, #0B1B3D 57%);
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 9em;
+}
+
+
+
 .navbar-brand {
-font-size: 24px;
-font-weight: bold;
-text-decoration: none;
-color: rgb(255, 95, 95);
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(255, 95, 95);
+
 }
 
 .navbar-brand:hover {
-opacity: 0.8;
+  opacity: 0.8;
 }
 
 .navbar-nav {
-list-style-type: none;
-margin: 0;
-padding: 0;
-display: flex; /* Display navbar links as a flex container */
-align-items: center; /* Center vertically */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-item {
-margin-left: 10px;
+  margin: 3px;
 }
 
 .nav-link {
-color: #fff;
-text-decoration: none;
-font-size: 16px;
-padding: 5px;
-transition: opacity 0.3s ease;
+  display: block;
+  padding: 30px;
+  /* background-color: #f2f2f28e; */
+  color: rgb(255, 255, 255);
+  border: 1px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .nav-link:hover {
-opacity: 0.8;
+  opacity: 0.8;
+  background-color: #e2e2e2;
 }
+
+.nav-link.active {
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+
+
+
 
 /* Searchbar */
 .search-container {
-display: flex;
-align-items: center;
-margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
 
 .search-input {
-border: none;
-border-radius: 4px;
-padding: 5px;
-font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 16px;
 }
 
 .search-button {
-background-color: #fff;
-color: #e53935;
-border: none;
-border-radius: 4px;
-padding: 5px 10px;
-margin-left: 5px;
-cursor: pointer;
-transition: background-color 0.3s ease;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #e53935;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search-button:hover {
-background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 .search-button:focus {
-outline: none;
+  outline: none;
 }
 
 .search-button:active {
 
   transform: translateY(1px);
 }
+
