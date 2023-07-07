@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-import  Navbar  from './Navbar';
+import Navbar from './Navbar';
 
 const CardBundles = () => {
   const [bundles, setBundles] = useState([]);
@@ -33,15 +33,26 @@ const CardBundles = () => {
     const filtered = bundles.filter(
       (bundle) =>
         bundle.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        (parseFloat(bundle.price) >= parseFloat(searchQuery) || isNaN(parseFloat(searchQuery)))
+        (parseFloat(bundle.price) >= parseFloat(searchQuery) ||
+          isNaN(parseFloat(searchQuery)))
     );
+
     const sorted = filtered.sort((a, b) => {
       if (sortOrder === 'asc') {
         return parseFloat(a.price) - parseFloat(b.price);
-      } else {
+      } else if (sortOrder === 'desc') {
         return parseFloat(b.price) - parseFloat(a.price);
+      } else if (sortOrder === 'series') {
+        return a.series.localeCompare(b.series);
+      } else if (sortOrder === 'releaseDate') {
+        return new Date(a.releaseDate) - new Date(b.releaseDate);
+      } else if (sortOrder === 'popularity') {
+        return b.popularity - a.popularity;
+      } else {
+        return 0;
       }
     });
+
     setFilteredBundles(sorted);
   }, [searchQuery, sortOrder, bundles]);
 
@@ -130,9 +141,16 @@ const CardBundles = () => {
               border: 'none',
             }}
           />
-          <select onChange={handleSortOrder} style={{ padding: '10px', borderRadius: '4px', border: 'none' }}>
+          <select
+            onChange={handleSortOrder}
+            value={sortOrder}
+            style={{ padding: '10px', borderRadius: '4px', border: 'none' }}
+          >
             <option value="asc">Price: Lowest to Highest</option>
             <option value="desc">Price: Highest to Lowest</option>
+            <option value="series">Sort by Series</option>
+            <option value="releaseDate">Sort by Release Date</option>
+            <option value="popularity">Sort by Popularity</option>
           </select>
         </div>
         <ul
@@ -165,7 +183,11 @@ const CardBundles = () => {
               }}
             >
               <h2 style={{ fontSize: '20px', color: '#333' }}>{bundle.name}</h2>
-              <a href="https://www.pokellector.com/sets" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.pokellector.com/sets"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img
                   src={bundle.images.logo}
                   alt={bundle.name}
@@ -173,8 +195,10 @@ const CardBundles = () => {
                 />
               </a>
               <p>Series: {bundle.series}</p>
+              <p>Release Date: {bundle.releaseDate}</p>
               <p>Total Cards: {bundle.total}</p>
               <p>Price: {bundle.price || '¥20,206.89'}</p>
+              <p>Popularity: {bundle.popularity}</p>
               <div>
                 <img
                   src={bundle.images.example} // Replace 'example' with the actual image field
@@ -182,7 +206,7 @@ const CardBundles = () => {
                   style={{ maxWidth: '100%', height: 'auto' }}
                 />
                 {/* Repeat the above code for different image fields */}
-              </div>
+             </div>
             </li>
           ))}
         </ul>
