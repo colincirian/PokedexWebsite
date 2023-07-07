@@ -1,9 +1,30 @@
-.gamer-image {
+
+/* pokedex */
+.image-container {
   position: relative;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
+}
+
+.gamer-image {
+  position: absolute;
+  top: 60px;
+  left: 40px;
+  z-index: -1;
+  width: 80%;
+  height: auto;
+}
+
+.search-results {
+  
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-wrap: wrap; /* Allow the results to wrap to a new line if needed */
+  margin-top: 20px; /* Add some top margin for spacing */
+}
+
+.pokemon-card {
+  width: 18rem;
+  margin: 10px; /* Add some margin between the cards */
+  /* Add any additional styling for the card */
 }
 
 
