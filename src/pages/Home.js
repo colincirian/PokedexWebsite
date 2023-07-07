@@ -4,7 +4,7 @@ import "../App.css";
 
 function Home() {
   const container = {
-    backgroundColor: "#0B1B3D",
+    // backgroundColor: "#0B1B3D",
     width: "100%",
     minHeight: "100vh",
     display: "flex",
