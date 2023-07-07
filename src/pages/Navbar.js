@@ -2,6 +2,9 @@ import React from 'react';
 import "../App.css";
 import { Link } from 'react-router-dom';
 import supabase from '../Services/supabaseClient';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
+
 
 const Navbar = () => {
 
@@ -50,6 +53,9 @@ const Navbar = () => {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" onClick={handleLogout}>Logout</Link>
+                            </li>
+                            <li className="nav-item">
+                                <FontAwesomeIcon icon={faUser} />
                             </li>
                         </ul>
                     </div>
