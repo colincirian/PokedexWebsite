@@ -30,7 +30,7 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-
+//PokemonTeamBuilder
 const removeFromTeam = (pokemon) => {
   setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
 };
@@ -67,7 +67,7 @@ const addToTeam = (pokemon) => {
         />
         <button onClick={handleSearchClick}>Search</button>
       </div>
-
+        
       <div className="team-container">
         <h2 className="team-heading">Team</h2>
         <div className="team-pokemon">
@@ -92,24 +92,20 @@ const addToTeam = (pokemon) => {
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
               {/* ... */}
-              <button
-                onClick={() => addToTeam(pokemon)}
-                disabled={isPokemonInTeam(pokemon) || team.length >= 6}
-              >
-                Add to Team
-              </button>
             </div>
           ))}
         </div>
       </div>
     </div>
   </div>
-
+              
       <div className="search-results-container">
         <h2 className="search-results-heading">Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
+
+            
               <img src={pokemon.Picture} alt={pokemon.Name} />
               <div>
                 <h3>{pokemon.Name}</h3>
@@ -130,7 +126,13 @@ const addToTeam = (pokemon) => {
                   Special Defense: {pokemon.Special_defense} <br />
                   Speed: {pokemon.Speed} <br />
                 </p>
-                <button onClick={() => addToTeam(pokemon)}>Add to Team</button>
+                
+                <button
+                onClick={() => addToTeam(pokemon)}
+                disabled={isPokemonInTeam(pokemon) || team.length >= 6}
+              >
+                Add to Team
+              </button>
               </div>
             </div>
           ))}
