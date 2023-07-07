@@ -126,7 +126,7 @@ const CardBundles = () => {
       <div>
         <Navbar user={user} onLogin={handleLogin} onLogout={handleLogout} />
         <h1 style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>
-          Card Sets
+          TCG
         </h1>
         <div style={{ marginBottom: '10px', textAlign: 'center' }}>
           <input
