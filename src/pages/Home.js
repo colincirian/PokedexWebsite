@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
+import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 import "../App.css";
 
 function Home() {
@@ -67,7 +69,9 @@ function Home() {
   };
 
   return (
-      <div style={screen}>
+    <div>
+      <Navbar />
+      <div style={screen}>       
         <h1 style={title}>POKEMON CARD WEBSITE</h1>
         <div style={background_image}>
           <div id="main" style={main_container}>
@@ -117,6 +121,7 @@ function Home() {
           </div>
         </div>
       </div>
+    </div>
   );
 }
 

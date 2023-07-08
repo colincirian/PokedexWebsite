@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import supabase from '../Services/supabaseClient';
-import Navbar from "./Navbar";
-
+import '../App.css';
+import Navbar from './Navbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
   const [team, setTeam] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+
+useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    return () => {
+      if (authListener && typeof authListener.unsubscribe === 'function') {
+        authListener.unsubscribe();
+      }
+    };
+  }, []);
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
@@ -54,30 +69,30 @@ function Pokedex() {
   const saveTeam = async () => {
     try {
       console.log('Team to be saved:', team); // Log the team object
-  
+
       const { data, error } = await supabase
-        .from('teams')
-        .upsert(team.map((pokemon) => ({ ...pokemon, id: pokemon.Name }))); // Add unique ID to each team member
-  
+        .from('team')
+        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })));
+
       if (error) {
         console.error('Error saving team:', error);
         return;
       }
-  
+
       console.log('Team saved:', data);
       alert('Team saved successfully!');
     } catch (error) {
       console.error('Error saving team:', error.message);
     }
   };
-  
-  
-  
+
+
+
 
   return (
     <div className="pokedex-container">
       <Navbar />
-      <h1 className="pokedex-heading">Pokedex</h1>
+      <h1 className="pokedex-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Pokedex</h1>
       <div className="pokedex-image-container">
         <img
           src="https://e0.pxfuel.com/wallpapers/1023/397/desktop-wallpaper-pokemon-pokedex-background.jpg"
@@ -94,19 +109,22 @@ function Pokedex() {
       </div>
       <div className="search-bar">
         <input
+          className="form-control me-2 search-input"
           type="text"
-          placeholder="Search for Pokemon"
+          placeholder="Search Pokemon..."
           value={search}
           onChange={handleSearch}
         />
-        <button onClick={handleSearchClick}>Search</button>
+        <button className="btn btn-outline-success search-button" onClick={handleSearchClick}>
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
       </div>
       <div className="team-container">
-        <h2 className="team-heading">Team</h2>
+        <h2 className="team-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Team</h2>
         <div className="team-pokemon">
-          <button onClick={saveTeam} disabled={team.length === 0}>
-  Save Team
-</button>
+          <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>
+            Save Team
+          </button>
 
           {team.map((pokemon, index) => (
             <div key={index} className="team-pokemon-card">
@@ -120,11 +138,11 @@ function Pokedex() {
         </div>
       </div>
       <div className="search-results-container">
-        <h2 className="search-results-heading">Search Results</h2>
+        <h2 className="search-results-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
-              
+
               <div>
                 <h3>{pokemon.Name}</h3>
                 <p>
