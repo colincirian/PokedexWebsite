@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import supabase from '../Services/supabaseClient';
 import '../App.css';
 import Navbar from './Navbar';
@@ -11,7 +11,6 @@ function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
   const [team, setTeam] = useState([]);
-
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -30,7 +29,6 @@ function Pokedex() {
       }
     };
   }, []);
-
 
   useEffect(() => {
     localStorage.setItem('team', JSON.stringify(team));
@@ -90,7 +88,6 @@ function Pokedex() {
         console.error('Error saving team:', error);
         return;
       }
-
 
       console.log('Team saved:', data);
       alert('Team saved successfully!');
