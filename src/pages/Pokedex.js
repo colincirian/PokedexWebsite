@@ -33,10 +33,27 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-  const removeFromTeam = (pokemon) => {
-    setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+  const removeFromTeam = async (pokemon) => {
+    try {
+      // Remove from database
+      const { error } = await supabase
+        .from('team')
+        .delete()
+        .eq('pokemon_id', pokemon.Name)
+        .eq('user_id', currentUser.id);
+        
+      if (error) {
+        console.error('Error deleting pokemon:', error);
+        return;
+      }
+      
+      // Remove from local state
+      setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+    } catch (error) {
+      console.error('Error deleting pokemon:', error.message);
+    }
   };
-
+  
   const isPokemonInTeam = (pokemon) => {
     return team.some((item) => item.Name === pokemon.Name);
   };
@@ -56,16 +73,14 @@ function Pokedex() {
   const saveTeam = async () => {
     try {
       console.log('Team to be saved:', team); // Log the team object
-
   
-     
-  
-
-
       const { data, error } = await supabase
-        .from('teams')
-        .upsert(team.map((pokemon) => ({ ...pokemon, id: pokemon.Name }))); // Add unique ID to each team member
-
+        .from('team')
+        .upsert(
+          team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })),
+          { onConflict: ['user_id', 'pokemon_id'] } // <-- added this line
+        );
+  
       if (error) {
         console.error('Error saving team:', error);
         return;
@@ -78,10 +93,7 @@ function Pokedex() {
       console.error('Error saving team:', error.message);
     }
   };
-
-
-
-
+  
   return (
     <div className="pokedex-container">
       <Navbar />
