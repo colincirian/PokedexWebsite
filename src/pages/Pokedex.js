@@ -62,11 +62,12 @@ useEffect(() => {
         console.error('Error deleting pokemon:', error);
         return;
       }
-      
-      // Remove from local state
-      setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+  
+      // Update team state in the browser
+      setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
+      alert('Pokemon successfully removed from the team.');
     } catch (error) {
-      console.error('Error deleting pokemon:', error.message);
+      console.error('Error deleting pokemon:', error);
     }
   };
   
@@ -75,7 +76,7 @@ useEffect(() => {
   };
 
   const addToTeam = (pokemon) => {
-    if (team.length >= 6) {
+    if (team.length >= 10) {
       alert('Team is already full!');
       return;
     }
