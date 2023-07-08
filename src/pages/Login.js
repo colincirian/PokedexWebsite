@@ -50,7 +50,7 @@ const Login = () => {
   justifyContent: "center",
   alignItems: "center",
   height: "100vh",
-  backgroundColor: "#0B1B3D", // Set the background color (RGB: 255, 159, 3)
+  // backgroundColor: "#0B1B3D", // Set the background color (RGB: 255, 159, 3)
  };
 
  const loginFormStyle = {
@@ -87,7 +87,7 @@ const Login = () => {
    <style>{`
         body {
           margin: 0;
-          background-color: rgb(255, 159, 3);
+          // background-color: rgb(255, 159, 3);
         }
       `}</style>
    <Navbar />
