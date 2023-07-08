@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import supabase from '../Services/supabaseClient';
 import Navbar from "./Navbar";
 
+
+
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
@@ -49,6 +51,29 @@ function Pokedex() {
     setTeam((prevTeam) => [...prevTeam, pokemon]);
   };
 
+  const saveTeam = async () => {
+    try {
+      console.log('Team to be saved:', team); // Log the team object
+  
+      const { data, error } = await supabase
+        .from('teams')
+        .upsert(team.map((pokemon) => ({ ...pokemon, id: pokemon.Name }))); // Add unique ID to each team member
+  
+      if (error) {
+        console.error('Error saving team:', error);
+        return;
+      }
+  
+      console.log('Team saved:', data);
+      alert('Team saved successfully!');
+    } catch (error) {
+      console.error('Error saving team:', error.message);
+    }
+  };
+  
+  
+  
+
   return (
     <div className="pokedex-container">
       <Navbar />
@@ -79,6 +104,10 @@ function Pokedex() {
       <div className="team-container">
         <h2 className="team-heading">Team</h2>
         <div className="team-pokemon">
+          <button onClick={saveTeam} disabled={team.length === 0}>
+  Save Team
+</button>
+
           {team.map((pokemon, index) => (
             <div key={index} className="team-pokemon-card">
               <img src={pokemon.Picture} alt={pokemon.Name} />
