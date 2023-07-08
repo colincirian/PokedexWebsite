@@ -12,13 +12,15 @@ function Pokedex() {
   const [team, setTeam] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setCurrentUser(session?.user ?? null);
     });
 
     return () => {
-      authListener.unsubscribe();
+      if (authListener && typeof authListener.unsubscribe === 'function') {
+        authListener.unsubscribe();
+      }
     };
   }, []);
 
