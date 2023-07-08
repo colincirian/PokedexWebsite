@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import supabase from '../Services/supabaseClient';
 import '../App.css';
 import Navbar from './Navbar';
@@ -10,19 +10,6 @@ function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
   const [team, setTeam] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-
-useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      setCurrentUser(session?.user ?? null);
-    });
-
-    return () => {
-      if (authListener && typeof authListener.unsubscribe === 'function') {
-        authListener.unsubscribe();
-      }
-    };
-  }, []);
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
@@ -70,14 +57,14 @@ useEffect(() => {
     try {
       console.log('Team to be saved:', team); // Log the team object
 
-
+  
      
   
 
 
       const { data, error } = await supabase
-        .from('team')
-        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })));
+        .from('teams')
+        .upsert(team.map((pokemon) => ({ ...pokemon, id: pokemon.Name }))); // Add unique ID to each team member
 
       if (error) {
         console.error('Error saving team:', error);
