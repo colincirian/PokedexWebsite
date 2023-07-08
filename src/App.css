@@ -176,6 +176,16 @@
 
 
 /* home cards */
+
+.poke-container {
+  background: rgba(255, 255, 255, 0.228);
+  width: 90vw;
+  border-radius: 10px;
+  margin: 2rem auto;
+  padding: 1rem;
+  box-shadow: 0 0 5px #c3c3c3;
+}
+
 .card {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -190,6 +200,7 @@
 .card-body {
   padding: 20px;
 }
+
 
 /* general */
 body {

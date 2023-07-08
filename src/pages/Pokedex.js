@@ -104,8 +104,11 @@ function Pokedex() {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
   };
 
+  
   return (
     <div className="pokedex-container">
+
+
       <Navbar />
       <h1 className="pokedex-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Pokedex</h1>
       <div className="pokedex-image-container">
