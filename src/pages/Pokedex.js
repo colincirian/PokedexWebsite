@@ -34,15 +34,13 @@ function Pokedex() {
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
-    let { data: pokemonStats, error } = await supabase
-      .from('pokemon_stats')
-      .select('*')
-      .ilike('Name', `%${searchTerm}%`);
-    if (error) {
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+      const data = await response.json();
+      console.log("Fetched data: ", data);
+      setPokemon([data]);
+    } catch (error) {
       console.log("Data fetch error: ", error);
-    } else {
-      console.log("Fetched data: ", pokemonStats);
-      setPokemon(pokemonStats);
     }
   };
 
@@ -55,11 +53,11 @@ function Pokedex() {
   };
 
   const removeFromTeam = (pokemon) => {
-    setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
+    setTeam((prevTeam) => prevTeam.filter((item) => item.name !== pokemon.name));
   };
 
   const isPokemonInTeam = (pokemon) => {
-    return team.some((item) => item.Name === pokemon.Name);
+    return team.some((item) => item.name === pokemon.name);
   };
 
   const addToTeam = (pokemon) => {
@@ -68,7 +66,7 @@ function Pokedex() {
       return;
     }
     if (isPokemonInTeam(pokemon)) {
-      alert(`${pokemon.Name} is already in the team!`);
+      alert(`${pokemon.name} is already in the team!`);
       return;
     }
     setTeam((prevTeam) => [...prevTeam, pokemon]);
@@ -85,7 +83,7 @@ function Pokedex() {
 
       const { data, error } = await supabase
         .from('team')
-        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })));
+        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.name })));
 
       if (error) {
         console.error('Error saving team:', error);
@@ -99,9 +97,10 @@ function Pokedex() {
     }
   };
 
-  const getPokemonImage = (pokemonName, pokemonPicture) => {
-    const pokemonId = pokemonName.toLowerCase().replace(/\s/g, '-');
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
+  const getPokemonImage = (pokemon) => {
+    if (!pokemon) return '';
+    const spriteUrl = pokemon.sprites?.front_default;
+    return spriteUrl || '';
   };
 
   
@@ -120,7 +119,7 @@ function Pokedex() {
         <div className="pokedex-pokemon-container">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="pokedex-pokemon-card">
-              <img src={getPokemonImage(pokemon.Name)} alt={pokemon.Name} />
+              <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
             </div>
           ))}
         </div>
@@ -146,9 +145,9 @@ function Pokedex() {
 
           {team.map((pokemon, index) => (
             <div key={index} className="team-pokemon-card">
-              <img src={getPokemonImage(pokemon.Name)} alt={pokemon.Name} />
+              <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
               <div>
-                <h3>{pokemon.Name}</h3>
+                <h3>{pokemon.name}</h3>
                 <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
               </div>
             </div>
@@ -161,31 +160,19 @@ function Pokedex() {
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
               <div>
-                <h3>{pokemon.Name}</h3>
+                <h3>{pokemon.name}</h3>
                 <p>
-                  Number: {pokemon.Number} <br />
-                  Fact: {pokemon.Fact} <br />
-                  Type: {pokemon.Type} <br />
-                  Height: {pokemon.Height} <br />
-                  Weight: {pokemon.Weight} <br />
-                  Gender: {pokemon.Gender} <br />
-                  Category: {pokemon.Category} <br />
-                  Abilities: {pokemon.Abilities} <br />
-                  Weaknesses: {pokemon.Weaknesses} <br />
-                  Hit Points: {pokemon.Hit_points} <br />
-                  Attack: {pokemon.Attack} <br />
-                  Defense: {pokemon.Defense} <br />
-                  Special Attack: {pokemon.Special_attack} <br />
-                  Special Defense: {pokemon.Special_defense} <br />
-                  Speed: {pokemon.Speed} <br />
+                  Number: {pokemon.id} <br />
+                  Height: {pokemon.height} <br />
+                  Weight: {pokemon.weight} <br />
                 </p>
                 {currentUser && (
-                  <button
+                 <button
                     onClick={() => addToTeam(pokemon)}
                     disabled={isPokemonInTeam(pokemon) || team.length >= 10}
                   >
                     Add to Team
-                 </button>
+                  </button>
                 )}
               </div>
             </div>
@@ -198,9 +185,9 @@ function Pokedex() {
           <div className="saved-cards-pokemon">
             {team.map((pokemon, index) => (
               <div key={index} className="saved-cards-pokemon-card">
-                <img src={getPokemonImage(pokemon.Name)} alt={pokemon.Name} />
+                <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
                 <div>
-                  <h3>{pokemon.Name}</h3>
+                  <h3>{pokemon.name}</h3>
                   <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
                 </div>
               </div>
