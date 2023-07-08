@@ -103,13 +103,11 @@ function Pokedex() {
     return spriteUrl || '';
   };
 
-  
+
   return (
     <div className="pokedex-container">
-
-
       <Navbar />
-      <h1 className="pokedex-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Pokedex</h1>
+      <h1 className="pokedex-heading">Pokedex</h1>
       <div className="pokedex-image-container">
         <img
           src="https://e0.pxfuel.com/wallpapers/1023/397/desktop-wallpaper-pokemon-pokedex-background.jpg"
@@ -120,6 +118,31 @@ function Pokedex() {
           {pokemon.map((pokemon, index) => (
             <div key={index} className="pokedex-pokemon-card">
               <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
+              <div>
+                <h3>{pokemon.name}</h3>
+                <p>
+                  Number: {pokemon.id} <br />
+                  Type: {pokemon.types.map((type) => type.type.name).join(', ')} <br />
+                  Height: {pokemon.height} <br />
+                  Weight: {pokemon.weight} <br />
+                  Abilities: {pokemon.abilities.map((ability) => ability.ability.name).join(', ')} <br />
+                  Base Experience: {pokemon.base_experience} <br />
+                  Stats: <br />
+                  {pokemon.stats.map((stat) => (
+                    <span key={stat.stat.name}>
+                      {stat.stat.name}: {stat.base_stat} <br />
+                    </span>
+                  ))}
+                </p>
+                {currentUser && (
+                  <button
+                    onClick={() => addToTeam(pokemon)}
+                    disabled={isPokemonInTeam(pokemon) || team.length >= 10}
+                  >
+                    Add to Team
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -137,9 +160,9 @@ function Pokedex() {
         </button>
       </div>
       <div className="team-container">
-        <h2 className="team-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Team</h2>
+        <h2 className="team-heading">Team</h2>
         <div className="team-pokemon">
-          <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>
+          <button onClick={saveTeam} disabled={team.length === 0}>
             Save Team
           </button>
 
@@ -155,7 +178,7 @@ function Pokedex() {
         </div>
       </div>
       <div className="search-results-container">
-        <h2 className="search-results-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Search Results</h2>
+        <h2 className="search-results-heading">Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
@@ -163,11 +186,20 @@ function Pokedex() {
                 <h3>{pokemon.name}</h3>
                 <p>
                   Number: {pokemon.id} <br />
+                  Type: {pokemon.types.map((type) => type.type.name).join(', ')} <br />
                   Height: {pokemon.height} <br />
                   Weight: {pokemon.weight} <br />
+                  Abilities: {pokemon.abilities.map((ability) => ability.ability.name).join(', ')} <br />
+                  Base Experience: {pokemon.base_experience} <br />
+                  Stats: <br />
+                  {pokemon.stats.map((stat) => (
+                    <span key={stat.stat.name}>
+                      {stat.stat.name}: {stat.base_stat} <br />
+                    </span>
+                  ))}
                 </p>
                 {currentUser && (
-                 <button
+                  <button
                     onClick={() => addToTeam(pokemon)}
                     disabled={isPokemonInTeam(pokemon) || team.length >= 10}
                   >
@@ -181,7 +213,7 @@ function Pokedex() {
       </div>
       {currentUser && (
         <div className="saved-cards-container">
-          <h2 className="saved-cards-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Saved Team</h2>
+          <h2 className="saved-cards-heading">Saved Team</h2>
           <div className="saved-cards-pokemon">
             {team.map((pokemon, index) => (
               <div key={index} className="saved-cards-pokemon-card">
