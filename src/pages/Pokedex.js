@@ -5,11 +5,36 @@ import Navbar from './Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
+const localStorage = window.localStorage;
 
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
   const [team, setTeam] = useState([]);
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const savedTeam = localStorage.getItem('team');
+    if (savedTeam) {
+      setTeam(JSON.parse(savedTeam));
+    }
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    return () => {
+      if (authListener && typeof authListener.unsubscribe === 'function') {
+        authListener.unsubscribe();
+      }
+    };
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem('team', JSON.stringify(team));
+  }, [team]);
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
@@ -33,27 +58,10 @@ function Pokedex() {
     fetchPokemon(search);
   };
 
-  const removeFromTeam = async (pokemon) => {
-    try {
-      // Remove from database
-      const { error } = await supabase
-        .from('team')
-        .delete()
-        .eq('pokemon_id', pokemon.Name)
-        .eq('user_id', currentUser.id);
-        
-      if (error) {
-        console.error('Error deleting pokemon:', error);
-        return;
-      }
-      
-      // Remove from local state
-      setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
-    } catch (error) {
-      console.error('Error deleting pokemon:', error.message);
-    }
+  const removeFromTeam = (pokemon) => {
+    setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
   };
-  
+
   const isPokemonInTeam = (pokemon) => {
     return team.some((item) => item.Name === pokemon.Name);
   };
@@ -72,15 +80,12 @@ function Pokedex() {
 
   const saveTeam = async () => {
     try {
-      console.log('Team to be saved:', team); // Log the team object
-  
+      console.log('Team to be saved:', team);
+
       const { data, error } = await supabase
         .from('team')
-        .upsert(
-          team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })),
-          { onConflict: ['user_id', 'pokemon_id'] } // <-- added this line
-        );
-  
+        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })));
+
       if (error) {
         console.error('Error saving team:', error);
         return;
@@ -93,7 +98,7 @@ function Pokedex() {
       console.error('Error saving team:', error.message);
     }
   };
-  
+
   return (
     <div className="pokedex-container">
       <Navbar />
@@ -147,7 +152,6 @@ function Pokedex() {
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
-
               <div>
                 <h3>{pokemon.Name}</h3>
                 <p>
