@@ -1,16 +1,14 @@
 /* pokedex */
-.pokedex-container {
- 
-}
-
 .pokedex-image-container {
   position: relative;
-  width: 100%;
+  width: 50%;
+  
+  margin: 0 auto;
 }
 
 .pokedex-image {
   width: 100%;
-  max-height: 400px;
+  max-height: 400px auto;
 }
 
 .pokedex-pokemon-container {
@@ -331,5 +329,3 @@ div {
 
   transform: translateY(1px);
 }
-
-

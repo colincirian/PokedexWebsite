@@ -107,9 +107,9 @@ function Pokedex() {
         </button>
       </div>
       <div className="team-container">
-        <h2 className="team-heading">Team</h2>
+        <h2 className="team-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Team</h2>
         <div className="team-pokemon">
-          <button onClick={saveTeam} disabled={team.length === 0}>
+          <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>
             Save Team
           </button>
 
@@ -125,7 +125,7 @@ function Pokedex() {
         </div>
       </div>
       <div className="search-results-container">
-        <h2 className="search-results-heading">Search Results</h2>
+        <h2 className="search-results-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
