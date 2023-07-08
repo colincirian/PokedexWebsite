@@ -3,7 +3,7 @@ import "../App.css";
 import { Link, NavLink } from 'react-router-dom';
 import supabase from '../Services/supabaseClient';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDiamond, faUser, faHome, faRightFromBracket, faRightToBracket, faGamepad } from '@fortawesome/free-solid-svg-icons';
+import { faDiamond, faUser, faHome, faRightFromBracket, faRightToBracket, faGamepad, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const handleLogout = async () => {
@@ -98,15 +98,11 @@ const Navbar = () => {
                                     Logout
                                 </Link>
                             </li>
-
-                            <li className="nav-item">
-                                <Link className="nav-link" onClick={handleLogout}>Logout</Link>
-                            </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <Link className="nav-link" to="/SignUp">Sign Up</Link>
-                            </li>
+                            </li> */}
                         </ul>
-                        {/* Search form */}
+                        {/* Search form
                         <form className="d-flex" role="search" onSubmit={handleSearchSubmit}>
                             <input
                                 className="form-control me-2 search-input"
@@ -116,8 +112,8 @@ const Navbar = () => {
                             />
                             <button className="btn btn-outline-success search-button" type="submit">
                                 <FontAwesomeIcon icon={faSearch} />
-                            </button>
-                        </form>
+                            // </button> */}
+                        {/* </form> */}
                     </div>
                 </div>
             </nav>
