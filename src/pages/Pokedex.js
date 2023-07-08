@@ -86,26 +86,26 @@ useEffect(() => {
   const saveTeam = async () => {
     try {
       console.log('Team to be saved:', team); // Log the team object
-
+  
       const { data, error } = await supabase
         .from('team')
-        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })));
-
+        .upsert(
+          team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })),
+          { onConflict: ['user_id', 'pokemon_id'] } // <-- added this line
+        );
+  
       if (error) {
         console.error('Error saving team:', error);
         return;
       }
-
+  
       console.log('Team saved:', data);
       alert('Team saved successfully!');
     } catch (error) {
       console.error('Error saving team:', error.message);
     }
   };
-
-
-
-
+  
   return (
     <div className="pokedex-container">
       <Navbar />
