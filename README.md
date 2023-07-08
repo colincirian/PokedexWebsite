@@ -1,5 +1,5 @@
 # Wikimon
-Welcome to our digital rolodex of rare and powerful Pokémon Cards! This project is the culmination of our love for Pokémon and the collectibles world. The application allows users to explore, search, and discover rare Pokémon cards. We aim to provide an easy-to-navigate platform for Pokémon card collectors and enthusiasts alike.
+Welcome to our digital rolodex of rare and powerful Pokémon! This project is the culmination of our love for Pokémon. The application allows users to search and add Pokémon to their team. We aim to provide an easy-to-navigate platform for Pokémon enthusiasts.
 
 # Table of Contents
 Usage and Features  
