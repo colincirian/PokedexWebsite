@@ -55,14 +55,11 @@ function Pokedex() {
     try {
       console.log('Team to be saved:', team); // Log the team object
   
-      const { data, error } = await supabase
-        .from('teams')
+      const { data,  } = await supabase
+        .from('team')
         .upsert(team.map((pokemon) => ({ ...pokemon, id: pokemon.Name }))); // Add unique ID to each team member
   
-      if (error) {
-        console.error('Error saving team:', error);
-        return;
-      }
+     
   
       console.log('Team saved:', data);
       alert('Team saved successfully!');
