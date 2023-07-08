@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
+const localStorage = window.localStorage;
 
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
@@ -12,7 +13,12 @@ function Pokedex() {
   const [team, setTeam] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-useEffect(() => {
+  useEffect(() => {
+    const savedTeam = localStorage.getItem('team');
+    if (savedTeam) {
+      setTeam(JSON.parse(savedTeam));
+    }
+
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setCurrentUser(session?.user ?? null);
     });
@@ -23,6 +29,10 @@ useEffect(() => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('team', JSON.stringify(team));
+  }, [team]);
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
@@ -47,7 +57,7 @@ useEffect(() => {
   };
 
   const removeFromTeam = (pokemon) => {
-    setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+    setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
   };
 
   const isPokemonInTeam = (pokemon) => {
@@ -68,7 +78,7 @@ useEffect(() => {
 
   const saveTeam = async () => {
     try {
-      console.log('Team to be saved:', team); // Log the team object
+      console.log('Team to be saved:', team);
 
       const { data, error } = await supabase
         .from('team')
@@ -85,9 +95,6 @@ useEffect(() => {
       console.error('Error saving team:', error.message);
     }
   };
-
-
-
 
   return (
     <div className="pokedex-container">
@@ -142,7 +149,6 @@ useEffect(() => {
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
-
               <div>
                 <h3>{pokemon.Name}</h3>
                 <p>
