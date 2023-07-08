@@ -5,7 +5,6 @@ import Navbar from './Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
@@ -51,7 +50,6 @@ useEffect(() => {
 
   const removeFromTeam = async (pokemon) => {
     try {
-      // Remove from database
       const { error } = await supabase
         .from('team')
         .delete()
@@ -63,7 +61,6 @@ useEffect(() => {
         return;
       }
   
-      // Update team state in the browser
       setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
       alert('Pokemon successfully removed from the team.');
     } catch (error) {
@@ -89,13 +86,13 @@ useEffect(() => {
 
   const saveTeam = async () => {
     try {
-      console.log('Team to be saved:', team); // Log the team object
+      console.log('Team to be saved:', team);
   
       const { data, error } = await supabase
         .from('team')
         .upsert(
           team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })),
-          { onConflict: ['user_id', 'pokemon_id'] } // <-- added this line
+          { onConflict: ['user_id', 'pokemon_id'] }
         );
   
       if (error) {
