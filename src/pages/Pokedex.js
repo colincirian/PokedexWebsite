@@ -5,8 +5,6 @@ import Navbar from './Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const localStorage = window.localStorage;
-
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
@@ -65,7 +63,7 @@ function Pokedex() {
   };
 
   const addToTeam = (pokemon) => {
-    if (team.length >= 6) {
+    if (team.length >= 10) {
       alert('Team is already full!');
       return;
     }
@@ -77,6 +75,11 @@ function Pokedex() {
   };
 
   const saveTeam = async () => {
+    if (!currentUser) {
+      alert('Please login to save the team!');
+      return;
+    }
+
     try {
       console.log('Team to be saved:', team);
 
@@ -96,6 +99,11 @@ function Pokedex() {
     }
   };
 
+  const getPokemonImage = (pokemonName, pokemonPicture) => {
+    const pokemonId = pokemonName.toLowerCase().replace(/\s/g, '-');
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
+  };
+
   return (
     <div className="pokedex-container">
       <Navbar />
@@ -109,7 +117,7 @@ function Pokedex() {
         <div className="pokedex-pokemon-container">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="pokedex-pokemon-card">
-              <img src={pokemon.Picture} alt={pokemon.Name} />
+              <img src={getPokemonImage(pokemon.Name)} alt={pokemon.Name} />
             </div>
           ))}
         </div>
@@ -135,7 +143,7 @@ function Pokedex() {
 
           {team.map((pokemon, index) => (
             <div key={index} className="team-pokemon-card">
-              <img src={pokemon.Picture} alt={pokemon.Name} />
+              <img src={getPokemonImage(pokemon.Name)} alt={pokemon.Name} />
               <div>
                 <h3>{pokemon.Name}</h3>
                 <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
@@ -168,17 +176,35 @@ function Pokedex() {
                   Special Defense: {pokemon.Special_defense} <br />
                   Speed: {pokemon.Speed} <br />
                 </p>
-                <button
-                  onClick={() => addToTeam(pokemon)}
-                  disabled={isPokemonInTeam(pokemon) || team.length >= 6}
-                >
-                  Add to Team
-                </button>
+                {currentUser && (
+                  <button
+                    onClick={() => addToTeam(pokemon)}
+                    disabled={isPokemonInTeam(pokemon) || team.length >= 10}
+                  >
+                    Add to Team
+                 </button>
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
+      {currentUser && (
+        <div className="saved-cards-container">
+          <h2 className="saved-cards-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Saved Team</h2>
+          <div className="saved-cards-pokemon">
+            {team.map((pokemon, index) => (
+              <div key={index} className="saved-cards-pokemon-card">
+                <img src={getPokemonImage(pokemon.Name)} alt={pokemon.Name} />
+                <div>
+                  <h3>{pokemon.Name}</h3>
+                  <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
