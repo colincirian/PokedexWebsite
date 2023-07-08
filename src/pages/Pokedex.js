@@ -9,6 +9,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [search, setSearch] = useState('');
+  const [team, setTeam] = useState([]);
 
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
