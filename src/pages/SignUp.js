@@ -17,19 +17,18 @@ function SignUp() {
       return;
     }
   
-    const { user, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
   
     if (error) {
       setSignUpError(processSupabaseError(error));
-    } else if (user) {
-      window.alert("Signup successful. Check your email for the verification link.");
     } else {
-      window.alert("This email is already registered. If you're already a member, please login instead.");
+      window.alert("Signup successful. Check your email for the verification link.");
     }
   };
+  
   
 
   const processSupabaseError = (error) => {
