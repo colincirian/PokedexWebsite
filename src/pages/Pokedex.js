@@ -46,10 +46,27 @@ useEffect(() => {
     fetchPokemon(search);
   };
 
-  const removeFromTeam = (pokemon) => {
-    setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+  const removeFromTeam = async (pokemon) => {
+    try {
+      // Remove from database
+      const { error } = await supabase
+        .from('team')
+        .delete()
+        .eq('pokemon_id', pokemon.Name)
+        .eq('user_id', currentUser.id);
+        
+      if (error) {
+        console.error('Error deleting pokemon:', error);
+        return;
+      }
+      
+      // Remove from local state
+      setTeam((prevTeam) => prevTeam.filter((item) => item !== pokemon));
+    } catch (error) {
+      console.error('Error deleting pokemon:', error.message);
+    }
   };
-
+  
   const isPokemonInTeam = (pokemon) => {
     return team.some((item) => item.Name === pokemon.Name);
   };
