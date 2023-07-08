@@ -176,11 +176,6 @@
   cursor: pointer;
 }
 
-/* ... rest of the CSS styles */
-
-
-/* ... rest of the CSS styles */
-
 
 /* home cards */
 .card {
@@ -230,6 +225,9 @@ div {
 
 
 /* Navbar */
+.navbar-container {
+  width: 100%;
+}
 
 
 .navbar-container {
@@ -333,4 +331,5 @@ div {
 
   transform: translateY(1px);
 }
+
 
