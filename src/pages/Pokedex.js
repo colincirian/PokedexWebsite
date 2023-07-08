@@ -12,7 +12,7 @@ function Pokedex() {
   const [currentUser, setCurrentUser] = useState(null);
 
 useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       setCurrentUser(session?.user ?? null);
     });
 
