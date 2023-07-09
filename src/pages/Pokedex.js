@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import supabase from '../Services/supabaseClient';
+import supabase from "./Services/supabaseClient";
 import '../App.css';
 import Navbar from './Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,13 +12,27 @@ function Pokedex() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const savedTeam = localStorage.getItem('team');
-    if (savedTeam) {
-      setTeam(JSON.parse(savedTeam));
-    }
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (_, session) => {
+      const user = session?.user;
+      setCurrentUser(user ?? null);
 
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      setCurrentUser(session?.user ?? null);
+      if (user) {
+        const { data: userTeam, error } = await supabase
+          .from('team')
+          .select('*')
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error fetching team:', error);
+        } else {
+            setTeam(userTeam.map(item => ({
+              Name: item.pokemon_id,
+              Picture: item.pokemon_picture
+            })));
+          }
+        } else {
+        setTeam([]);
+      }
     });
 
     return () => {
@@ -46,14 +60,34 @@ function Pokedex() {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
-  };
+    if (event.keyCode === 13) {
+      fetchPokemon(event.target.value);
+    }
+};
 
   const handleSearchClick = () => {
     fetchPokemon(search);
   };
 
-  const removeFromTeam = (pokemon) => {
-    setTeam((prevTeam) => prevTeam.filter((item) => item.name !== pokemon.name));
+  const removeFromTeam = async (pokemon) => {
+    try {
+      const { error } = await supabase
+        .from('team')
+        .delete()
+        .eq('pokemon_id', pokemon.Name)
+        .eq('user_id', currentUser.id)
+        .eq('pokemon_picture', pokemon.Picture)
+        
+      if (error) {
+        console.error('Error deleting pokemon:', error);
+        return;
+      }
+  
+      setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
+      alert('Pokemon successfully removed from the team.');
+    } catch (error) {
+      console.error('Error deleting pokemon:', error);
+    }
   };
 
   const isPokemonInTeam = (pokemon) => {
@@ -79,12 +113,19 @@ function Pokedex() {
     }
 
     try {
+        if (!currentUser) {
+           alert('Please log in to add a team');
+           return;
+         }
       console.log('Team to be saved:', team);
-
+  
       const { data, error } = await supabase
         .from('team')
-        .upsert(team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.name })));
-
+        .upsert(
+          team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name, pokemon_picture: pokemon.Picture })),
+          { onConflict: ['user_id', 'pokemon_id', 'pokemon_picture'] }
+        );
+  
       if (error) {
         console.error('Error saving team:', error);
         return;
@@ -154,6 +195,7 @@ function Pokedex() {
           placeholder="Search Pokemon..."
           value={search}
           onChange={handleSearch}
+          onKeyDown={handleSearch}
         />
         <button className="btn btn-outline-success search-button" onClick={handleSearchClick}>
           <FontAwesomeIcon icon={faSearch} />
@@ -162,7 +204,7 @@ function Pokedex() {
       <div className="team-container">
         <h2 className="team-heading">Team</h2>
         <div className="team-pokemon">
-          <button onClick={saveTeam} disabled={team.length === 0}>
+          <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#f62d2f', backgroundColor: '#36b64a', textAlign: 'center', padding: '20px' }}>
             Save Team
           </button>
 
@@ -198,14 +240,12 @@ function Pokedex() {
                     </span>
                   ))}
                 </p>
-                {currentUser && (
-                  <button
-                    onClick={() => addToTeam(pokemon)}
-                    disabled={isPokemonInTeam(pokemon) || team.length >= 10}
-                  >
-                    Add to Team
-                  </button>
-                )}
+                <button
+                  onClick={() => addToTeam(pokemon)}
+                  disabled={isPokemonInTeam(pokemon) || team.length >= 10}
+                >
+                  Add to Team
+                </button>
               </div>
             </div>
           ))}
