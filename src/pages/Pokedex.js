@@ -82,7 +82,6 @@ function Pokedex() {
       }
   
       setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
-      alert('Pokemon successfully removed from the team.');
     } catch (error) {
       console.error('Error deleting pokemon:', error);
     }
