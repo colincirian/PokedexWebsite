@@ -18,6 +18,7 @@ const Navbar = () => {
    console.log("Error logging out:", error.message);
   } else {
    window.alert("You have successfully logged out!");
+   window.location.href = "/";
   }
  };
 

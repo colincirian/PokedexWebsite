@@ -11,9 +11,27 @@ function Pokedex() {
   const [team, setTeam] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
-      setCurrentUser(session?.user ?? null);
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (_, session) => {
+      const user = session?.user;
+      setCurrentUser(user ?? null);
+
+      if (user) {
+        // Fetch the saved team data for the logged-in user
+        const { data: userTeam, error } = await supabase
+          .from('team')
+          .select('*')
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error fetching team:', error);
+        } else {
+          setTeam(userTeam);
+        }
+      } else {
+        // Clear the team if the user is logged out
+        setTeam([]);
+      }
     });
 
     return () => {
@@ -22,7 +40,7 @@ useEffect(() => {
       }
     };
   }, []);
-
+  
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
     let { data: pokemonStats, error } = await supabase
@@ -86,6 +104,10 @@ useEffect(() => {
 
   const saveTeam = async () => {
     try {
+      if (!currentUser) {
+        alert('Please log in to add a team.');
+        return;
+      }
       console.log('Team to be saved:', team);
   
       const { data, error } = await supabase
@@ -183,7 +205,7 @@ useEffect(() => {
                 </p>
                 <button
                   onClick={() => addToTeam(pokemon)}
-                  disabled={isPokemonInTeam(pokemon) || team.length >= 6}
+                  disabled={isPokemonInTeam(pokemon) || team.length >= 10}
                 >
                   Add to Team
                 </button>
