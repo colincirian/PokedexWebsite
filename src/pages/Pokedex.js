@@ -11,27 +11,9 @@ function Pokedex() {
   const [team, setTeam] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (_, session) => {
-      const user = session?.user;
-      setCurrentUser(user ?? null);
-
-      if (user) {
-        // Fetch the saved team data for the logged-in user
-        const { data: userTeam, error } = await supabase
-          .from('team')
-          .select('*')
-          .eq('user_id', user.id);
-
-        if (error) {
-          console.error('Error fetching team:', error);
-        } else {
-          setTeam(userTeam);
-        }
-      } else {
-        // Clear the team if the user is logged out
-        setTeam([]);
-      }
+useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
+      setCurrentUser(session?.user ?? null);
     });
 
     return () => {
@@ -40,7 +22,7 @@ function Pokedex() {
       }
     };
   }, []);
-  
+
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
     let { data: pokemonStats, error } = await supabase
@@ -104,10 +86,10 @@ function Pokedex() {
 
   const saveTeam = async () => {
     try {
-      if (!currentUser) {
-        alert('Please log in to add a team.');
-        return;
-      }
+        if (!currentUser) {
+           alert('Please log in to add a team');
+           return;
+         }
       console.log('Team to be saved:', team);
   
       const { data, error } = await supabase
@@ -163,7 +145,7 @@ function Pokedex() {
       <div className="team-container">
         <h2 className="team-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Team</h2>
         <div className="team-pokemon">
-          <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>
+          <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#f62d2f', backgroundColor: '#36b64a', textAlign: 'center', padding: '20px' }}>
             Save Team
           </button>
 
