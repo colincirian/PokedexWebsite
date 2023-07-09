@@ -11,9 +11,28 @@ function Pokedex() {
   const [team, setTeam] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
-      setCurrentUser(session?.user ?? null);
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (_, session) => {
+      const user = session?.user;
+      setCurrentUser(user ?? null);
+
+      if (user) {
+        const { data: userTeam, error } = await supabase
+          .from('team')
+          .select('*')
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error fetching team:', error);
+        } else {
+            setTeam(userTeam.map(item => ({
+              Name: item.pokemon_id,
+              Picture: item.pokemon_picture
+            })));
+          }
+        } else {
+        setTeam([]);
+      }
     });
 
     return () => {
@@ -54,7 +73,8 @@ useEffect(() => {
         .from('team')
         .delete()
         .eq('pokemon_id', pokemon.Name)
-        .eq('user_id', currentUser.id);
+        .eq('user_id', currentUser.id)
+        .eq('pokemon_picture', pokemon.Picture)
         
       if (error) {
         console.error('Error deleting pokemon:', error);
@@ -95,8 +115,8 @@ useEffect(() => {
       const { data, error } = await supabase
         .from('team')
         .upsert(
-          team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name })),
-          { onConflict: ['user_id', 'pokemon_id'] }
+          team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name, pokemon_picture: pokemon.Picture })),
+          { onConflict: ['user_id', 'pokemon_id', 'pokemon_picture'] }
         );
   
       if (error) {

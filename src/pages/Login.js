@@ -34,7 +34,7 @@ const Login = () => {
    // Authentication successful
    // Store the token in local storage or a browser cookie
    localStorage.setItem("token", data.access_token);
-
+   alert("Login successful!");
    // Redirect the user to the desired page or update the UI accordingly
    navigate("/");
   } catch (error) {
