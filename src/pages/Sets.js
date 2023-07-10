@@ -66,7 +66,7 @@ const CardBundles = () => {
           setUser(data.user);
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        
       }
     };
 
