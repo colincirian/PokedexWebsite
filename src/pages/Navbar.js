@@ -39,7 +39,7 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button> */}
      <Link className="navbar-brand" to="/">
-      Poke Website
+      Pokedex of Anomalies
      </Link>
      <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0 navbar-link">
