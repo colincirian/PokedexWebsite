@@ -22,12 +22,11 @@ function Home() {
   const boxes = {
     width: "380px",
     height: "100px",
-    borderRadius: "1rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "transparent",
-    border: "solid white 4px",
+    border: "solid black 4px",
     margin: "1rem",
     color: "white",
     fontSize: "20px",
@@ -48,7 +47,7 @@ function Home() {
     height: "100vh",
     margin: "auto",
     display: "flex",
-    borderRadius: "1.5rem"
+    
   };
 
   const anchor = {
@@ -61,8 +60,9 @@ function Home() {
   const title = {
     position: "absolute",
     margin: "auto",
-    fontSize: "50px",
-    left: "110px",
+    fontSize:"38px",
+    left: "130px",
+    top: "0.5rem",
     fontFamily: "Arial, Helvetica, sans-serif",
     color: "#0B1B3D"
   };
@@ -70,7 +70,7 @@ function Home() {
   return (
     <div>
       <div style={screen}>       
-        <h1 style={title}>POKEMON CARD WEBSITE</h1>
+        <h1 style={title}>POKEDEX WEBSITE</h1>
         <div style={background_image}>
           <div id="" style={main_container}>
 
