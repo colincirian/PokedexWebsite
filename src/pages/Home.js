@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 function Home() {
 
   // GRAB STYLING ELEMENT FROM INDEX.HTML
-  const ignoreStyle = document.getElementsByClassName('.poke-container');
+  const ignoreStyle = document.getElementsByClassName('poke-container');
 
   // REMOVE STYLE FROM INDEX.HTML
-  if (ignoreStyle) {
-  ignoreStyle.classList.remove('poke-container');
+  if (ignoreStyle.length > 0) {
+  ignoreStyle[0].classList.remove('poke-container');
   }
 
   const hoverEffect = (event) => {
