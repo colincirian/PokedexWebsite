@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 function Home() {
 
   // GRAB STYLING ELEMENT FROM INDEX.HTML
-  const ignoreStyle = document.querySelector('.poke-container');
+  const ignoreStyle = document.getElementsByClassName('.poke-container');
 
   // REMOVE STYLE FROM INDEX.HTML
+  if (ignoreStyle) {
   ignoreStyle.classList.remove('poke-container');
+  }
 
   const hoverEffect = (event) => {
     event.target.style.backgroundColor = "#FFA500";
