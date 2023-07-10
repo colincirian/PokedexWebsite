@@ -6,17 +6,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function Pokedex() {
-  const [pokemon, setPokemon] = useState([]);
-  const [search, setSearch] = useState('');
-  const [team, setTeam] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  // State variables
+  const [pokemon, setPokemon] = useState([]); // Pokemon data
+  const [search, setSearch] = useState(''); // Search term
+  const [team, setTeam] = useState([]); // User's team
+  const [currentUser, setCurrentUser] = useState(null); // Current user data
 
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (_, session) => {
+    // Effect for fetching team data and setting current user
+    const authListener = supabase.auth.onAuthStateChange(async (_, session) => {
       const user = session?.user;
       setCurrentUser(user ?? null);
 
       if (user) {
+        // Fetch user's team data from Supabase
         const { data: userTeam, error } = await supabase
           .from('team')
           .select('*')
@@ -25,19 +28,21 @@ function Pokedex() {
         if (error) {
           console.error('Error fetching team:', error);
         } else {
-            setTeam(userTeam.map(item => ({
-              Name: item.pokemon_id,
-              Picture: item.pokemon_picture
-            })));
-          }
-        } else {
+          // Map team data and update the team state
+          setTeam(userTeam.map(item => ({
+            Name: item.pokemon_id,
+            Picture: item.pokemon_picture
+          })));
+        }
+      } else {
         setTeam([]);
       }
     });
 
     return () => {
-      if (authListener && typeof authListener.unsubscribe === 'function') {
-        authListener.unsubscribe();
+      // Cleanup function for unsubscribing from auth listener
+      if (authListener) {
+        authListener.data.unsubscribe();
       }
     };
   }, []);
@@ -59,35 +64,40 @@ function Pokedex() {
   const handleSearch = (event) => {
     setSearch(event.target.value);
     if (event.keyCode === 13) {
+      // Fetch Pokemon when Enter key is pressed
       fetchPokemon(event.target.value);
     }
-};
+  };
 
   const handleSearchClick = () => {
+    // Fetch Pokemon when search button is clicked
     fetchPokemon(search);
   };
 
   const removeFromTeam = async (pokemon) => {
     try {
+      // Delete the Pokemon from the user's team in Supabase
       const { error } = await supabase
         .from('team')
         .delete()
         .eq('pokemon_id', pokemon.Name)
         .eq('user_id', currentUser.id)
-        .eq('pokemon_picture', pokemon.Picture)
-        
+        .eq('pokemon_picture', pokemon.Picture);
+
       if (error) {
         console.error('Error deleting pokemon:', error);
         return;
       }
-  
+
+      // Update the team state by filtering out the removed Pokemon
       setTeam((prevTeam) => prevTeam.filter((item) => item.Name !== pokemon.Name));
     } catch (error) {
       console.error('Error deleting pokemon:', error);
     }
   };
-  
+
   const isPokemonInTeam = (pokemon) => {
+    // Check if a given Pokemon is in the user's team
     return team.some((item) => item.Name === pokemon.Name);
   };
 
@@ -100,36 +110,38 @@ function Pokedex() {
       alert(`${pokemon.Name} is already in the team!`);
       return;
     }
+    // Add the Pokemon to the team state
     setTeam((prevTeam) => [...prevTeam, pokemon]);
   };
 
   const saveTeam = async () => {
     try {
-        if (!currentUser) {
-           alert('Please log in to add a team');
-           return;
-         }
+      if (!currentUser) {
+        alert('Please log in to add a team');
+        return;
+      }
       console.log('Team to be saved:', team);
-  
+
+      // Upsert the team data into the "team" table in Supabase
       const { data, error } = await supabase
         .from('team')
         .upsert(
           team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name, pokemon_picture: pokemon.Picture })),
           { onConflict: ['user_id', 'pokemon_id', 'pokemon_picture'] }
         );
-  
+
       if (error) {
         console.error('Error saving team:', error);
         return;
       }
-  
+
       console.log('Team saved:', data);
       alert('Team saved successfully!');
     } catch (error) {
       console.error('Error saving team:', error.message);
     }
   };
-  
+
   return (
     <div className="pokedex-container">
       <Navbar />
@@ -180,11 +192,10 @@ function Pokedex() {
         </div>
       </div>
       <div className="search-results-container">
-        <h2 className="search-results-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Search Results</h2>
+      <h2 className="search-results-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
-
               <div>
                 <h3>{pokemon.Name}</h3>
                 <p>
@@ -197,12 +208,11 @@ function Pokedex() {
                   Category: {pokemon.Category} <br />
                   Abilities: {pokemon.Abilities} <br />
                   Weaknesses: {pokemon.Weaknesses} <br />
-                  Hit Points: {pokemon.Hit_points} <br />
+                  Hit Points: {pokemon.Hit_Points} <br /> 
                   Attack: {pokemon.Attack} <br />
                   Defense: {pokemon.Defense} <br />
-                  Special Attack: {pokemon.Special_attack} <br />
-                  Special Defense: {pokemon.Special_defense} <br />
-                  Speed: {pokemon.Speed} <br />
+                  Special Attack: {pokemon.Special_Attack} <br />   
+                  Special Defense: {pokemon.Special_Defense} <br /> 
                 </p>
                 <button
                   onClick={() => addToTeam(pokemon)}
