@@ -227,28 +227,23 @@ div {
   width: 100%;
 }
 
-
-.navbar-container {
-  width: 100%;
-}
-
 .navbar {
   background: radial-gradient(ellipse at center, #3d3d3d 0%, #0B1B3D 57%);
   padding: 20px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
-  height: 9em;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
 }
-
-
 
 .navbar-brand {
   font-size: 24px;
   font-weight: bold;
   text-decoration: none;
   color: rgb(255, 95, 95);
-
+  flex: 1;
 }
 
 .navbar-brand:hover {
@@ -260,11 +255,14 @@ div {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 .nav-item {
-  margin: 3px;
+  margin: 4px;
+  flex: 0 1 auto;
+  max-width: 200px;
 }
 
 .nav-link {
