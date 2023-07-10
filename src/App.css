@@ -234,8 +234,8 @@ div {
   justify-content: center;
   position: relative;
   height: auto;
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
 }
 
 .navbar-brand {
@@ -243,8 +243,8 @@ div {
   font-weight: bold;
   text-decoration: none;
   color: rgb(255, 95, 95);
-  flex: 1;
 }
+
 
 .navbar-brand:hover {
   opacity: 0.8;
