@@ -3,6 +3,12 @@ import { Link } from "react-router-dom";
 
 function Home() {
 
+  // GRAB STYLING ELEMENT FROM INDEX.HTML
+  const ignoreStyle = document.querySelector('.poke-container');
+
+  // REMOVE STYLE FROM INDEX.HTML
+  ignoreStyle.classList.remove('poke-container');
+
   const hoverEffect = (event) => {
     event.target.style.backgroundColor = "#FFA500";
     event.target.style.transform = "translateY(-15px)";
