@@ -42,19 +42,17 @@ function Pokedex() {
     };
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('team', JSON.stringify(team));
-  }, [team]);
-
   const fetchPokemon = async (searchTerm) => {
     console.log("Fetching Pokemon with term: ", searchTerm);
-    try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
-      const data = await response.json();
-      console.log("Fetched data: ", data);
-      setPokemon([data]);
-    } catch (error) {
+    let { data: pokemonStats, error } = await supabase
+      .from('pokemon_stats')
+      .select('*')
+      .ilike('Name', `%${searchTerm}%`);
+    if (error) {
       console.log("Data fetch error: ", error);
+    } else {
+      console.log("Fetched data: ", pokemonStats);
+      setPokemon(pokemonStats);
     }
   };
 
@@ -88,9 +86,9 @@ function Pokedex() {
       console.error('Error deleting pokemon:', error);
     }
   };
-
+  
   const isPokemonInTeam = (pokemon) => {
-    return team.some((item) => item.name === pokemon.name);
+    return team.some((item) => item.Name === pokemon.Name);
   };
 
   const addToTeam = (pokemon) => {
@@ -99,18 +97,13 @@ function Pokedex() {
       return;
     }
     if (isPokemonInTeam(pokemon)) {
-      alert(`${pokemon.name} is already in the team!`);
+      alert(`${pokemon.Name} is already in the team!`);
       return;
     }
     setTeam((prevTeam) => [...prevTeam, pokemon]);
   };
 
   const saveTeam = async () => {
-    if (!currentUser) {
-      alert('Please login to save the team!');
-      return;
-    }
-
     try {
         if (!currentUser) {
            alert('Please log in to add a team');
@@ -129,25 +122,18 @@ function Pokedex() {
         console.error('Error saving team:', error);
         return;
       }
-
+  
       console.log('Team saved:', data);
       alert('Team saved successfully!');
     } catch (error) {
       console.error('Error saving team:', error.message);
     }
   };
-
-  const getPokemonImage = (pokemon) => {
-    if (!pokemon) return '';
-    const spriteUrl = pokemon.sprites?.front_default;
-    return spriteUrl || '';
-  };
-
-
+  
   return (
     <div className="pokedex-container">
       <Navbar />
-      <h1 className="pokedex-heading">Pokedex</h1>
+      <h1 className="pokedex-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Pokedex</h1>
       <div className="pokedex-image-container">
         <img
           src="https://e0.pxfuel.com/wallpapers/1023/397/desktop-wallpaper-pokemon-pokedex-background.jpg"
@@ -157,32 +143,7 @@ function Pokedex() {
         <div className="pokedex-pokemon-container">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="pokedex-pokemon-card">
-              <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
-              <div>
-                <h3>{pokemon.name}</h3>
-                <p>
-                  Number: {pokemon.id} <br />
-                  Type: {pokemon.types.map((type) => type.type.name).join(', ')} <br />
-                  Height: {pokemon.height} <br />
-                  Weight: {pokemon.weight} <br />
-                  Abilities: {pokemon.abilities.map((ability) => ability.ability.name).join(', ')} <br />
-                  Base Experience: {pokemon.base_experience} <br />
-                  Stats: <br />
-                  {pokemon.stats.map((stat) => (
-                    <span key={stat.stat.name}>
-                      {stat.stat.name}: {stat.base_stat} <br />
-                    </span>
-                  ))}
-                </p>
-                {currentUser && (
-                  <button
-                    onClick={() => addToTeam(pokemon)}
-                    disabled={isPokemonInTeam(pokemon) || team.length >= 10}
-                  >
-                    Add to Team
-                  </button>
-                )}
-              </div>
+              <img src={pokemon.Picture} alt={pokemon.Name} />
             </div>
           ))}
         </div>
@@ -201,7 +162,7 @@ function Pokedex() {
         </button>
       </div>
       <div className="team-container">
-        <h2 className="team-heading">Team</h2>
+        <h2 className="team-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Team</h2>
         <div className="team-pokemon">
           <button onClick={saveTeam} disabled={team.length === 0} style={{ fontSize: '32px', color: '#f62d2f', backgroundColor: '#36b64a', textAlign: 'center', padding: '20px' }}>
             Save Team
@@ -209,9 +170,9 @@ function Pokedex() {
 
           {team.map((pokemon, index) => (
             <div key={index} className="team-pokemon-card">
-              <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
+              <img src={pokemon.Picture} alt={pokemon.Name} />
               <div>
-                <h3>{pokemon.name}</h3>
+                <h3>{pokemon.Name}</h3>
                 <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
               </div>
             </div>
@@ -219,25 +180,29 @@ function Pokedex() {
         </div>
       </div>
       <div className="search-results-container">
-        <h2 className="search-results-heading">Search Results</h2>
+        <h2 className="search-results-heading" style={{ fontSize: '32px', color: '#fff', textAlign: 'center', padding: '20px' }}>Search Results</h2>
         <div className="search-results-pokemon">
           {pokemon.map((pokemon, index) => (
             <div key={index} className="search-results-pokemon-card">
+
               <div>
-                <h3>{pokemon.name}</h3>
+                <h3>{pokemon.Name}</h3>
                 <p>
-                  Number: {pokemon.id} <br />
-                  Type: {pokemon.types.map((type) => type.type.name).join(', ')} <br />
-                  Height: {pokemon.height} <br />
-                  Weight: {pokemon.weight} <br />
-                  Abilities: {pokemon.abilities.map((ability) => ability.ability.name).join(', ')} <br />
-                  Base Experience: {pokemon.base_experience} <br />
-                  Stats: <br />
-                  {pokemon.stats.map((stat) => (
-                    <span key={stat.stat.name}>
-                      {stat.stat.name}: {stat.base_stat} <br />
-                    </span>
-                  ))}
+                  Number: {pokemon.Number} <br />
+                  Fact: {pokemon.Fact} <br />
+                  Type: {pokemon.Type} <br />
+                  Height: {pokemon.Height} <br />
+                  Weight: {pokemon.Weight} <br />
+                  Gender: {pokemon.Gender} <br />
+                  Category: {pokemon.Category} <br />
+                  Abilities: {pokemon.Abilities} <br />
+                  Weaknesses: {pokemon.Weaknesses} <br />
+                  Hit Points: {pokemon.Hit_points} <br />
+                  Attack: {pokemon.Attack} <br />
+                  Defense: {pokemon.Defense} <br />
+                  Special Attack: {pokemon.Special_attack} <br />
+                  Special Defense: {pokemon.Special_defense} <br />
+                  Speed: {pokemon.Speed} <br />
                 </p>
                 <button
                   onClick={() => addToTeam(pokemon)}
@@ -250,22 +215,6 @@ function Pokedex() {
           ))}
         </div>
       </div>
-      {currentUser && (
-        <div className="saved-cards-container">
-          <h2 className="saved-cards-heading">Saved Team</h2>
-          <div className="saved-cards-pokemon">
-            {team.map((pokemon, index) => (
-              <div key={index} className="saved-cards-pokemon-card">
-                <img src={getPokemonImage(pokemon)} alt={pokemon.name} />
-                <div>
-                  <h3>{pokemon.name}</h3>
-                  <button onClick={() => removeFromTeam(pokemon)}>Remove</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
