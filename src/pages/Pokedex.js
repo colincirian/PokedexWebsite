@@ -111,17 +111,17 @@ function Pokedex() {
          }
       console.log('Team to be saved:', team);
   
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('team')
         .upsert(
           team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name, pokemon_picture: pokemon.Picture })),
           { onConflict: ['user_id', 'pokemon_id', 'pokemon_picture'] }
         );
   
-      if (error) {
-        console.error('Error saving team:', error);
-        return;
-      }
+      // if (error) {
+      //   console.error('Error saving team:', error);
+      //   return;
+      // }
   
       console.log('Team saved:', data);
       alert('Team saved successfully!');

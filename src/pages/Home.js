@@ -45,11 +45,14 @@ function Home() {
     cursor: "pointer",
     marginTop: "20px",
     transition: "transform 0.4s ease",
+    flexWrap: "wrap",
   };
 
   // STYLES THE MAIN CONTAINER TO FLEX
   const main_container = {
     display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap"
   };
 
   // STYLE FOR THE BACKGROUND IMAGE
@@ -68,7 +71,7 @@ function Home() {
     textDecoration: "none",
     fontSize: "30px",
     color: "#0B1B3D",
-    position: "abolute",
+    position: "absolute"
   };
 
   // STYLE FOR THE TITLE
