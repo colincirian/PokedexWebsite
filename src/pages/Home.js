@@ -40,11 +40,14 @@ function Home() {
     fontSize: "20px",
     cursor: "pointer",
     marginTop: "20px",
-    transition: "transform 0.4s ease"
+    transition: "transform 0.4s ease",
+    flexWrap: "wrap",
   };
 
   const main_container = {
-    display: "flex"
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
   };
 
   const background_image = {
@@ -62,7 +65,7 @@ function Home() {
     textDecoration: "none",
     fontSize: "30px",
     color: "#0B1B3D",
-    position: "abolute"
+    position: "absolute"
   };
 
   const title = {
