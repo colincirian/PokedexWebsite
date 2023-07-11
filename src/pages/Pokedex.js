@@ -118,10 +118,10 @@ function Pokedex() {
           { onConflict: ['user_id', 'pokemon_id', 'pokemon_picture'] }
         );
   
-      if (error) {
-        console.error('Error saving team:', error);
-        return;
-      }
+      // if (error) {
+      //   console.error('Error saving team:', error);
+      //   return;
+      // }
   
       console.log('Team saved:', data);
       alert('Team saved successfully!');
