@@ -111,7 +111,7 @@ function Pokedex() {
          }
       console.log('Team to be saved:', team);
   
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('team')
         .upsert(
           team.map((pokemon) => ({ user_id: currentUser.id, pokemon_id: pokemon.Name, pokemon_picture: pokemon.Picture })),
