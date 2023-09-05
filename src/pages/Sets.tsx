@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, SyntheticEvent } from "react";
 import "../App.css";
 import Navbar from "./Navbar";
 
-const CardBundles = () => {
-  const [bundles, setBundles] = useState([]);
-  const [user, setUser] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredBundles, setFilteredBundles] = useState([]);
-  const [sortOrder, setSortOrder] = useState("asc"); // ascending order by default
+interface Bundle {
+  id: string;
+  name: string;
+  series: string;
+  releaseDate: string;
+  total: number;
+  price: string;
+  popularity: number;
+  images: {
+    logo: string;
+    example: string; // Replace 'example' with the actual image field type
+  };
+}
+
+const CardBundles: React.FC = () => {
+  const [bundles, setBundles] = useState<Bundle[]>([]);
+  const [user, setUser] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredBundles, setFilteredBundles] = useState<Bundle[]>([]);
+  const [sortOrder, setSortOrder] = useState<string>("asc"); // ascending order by default
 
   useEffect(() => {
     // Fetch card bundles from the API
@@ -45,7 +59,7 @@ const CardBundles = () => {
       } else if (sortOrder === "series") {
         return a.series.localeCompare(b.series);
       } else if (sortOrder === "releaseDate") {
-        return new Date(a.releaseDate) - new Date(b.releaseDate);
+        return new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime();
       } else if (sortOrder === "popularity") {
         return b.popularity - a.popularity;
       } else {
@@ -66,14 +80,14 @@ const CardBundles = () => {
           setUser(data.user);
         }
       } catch (error) {
-        
+        console.error("Error fetching user data:", error);
       }
     };
 
     fetchUser();
   }, []);
 
-  const handleLogin = async (username, password) => {
+  const handleLogin = async (username: string, password: string) => {
     try {
       const response = await fetch("/login", {
         method: "POST",
@@ -107,11 +121,11 @@ const CardBundles = () => {
     }
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSortOrder = (event) => {
+  const handleSortOrder = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(event.target.value);
   };
 
@@ -183,10 +197,10 @@ const CardBundles = () => {
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.05)";
+                e.currentTarget.style.transform = "scale(1.05)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
+                e.currentTarget.style.transform = "scale(1)";
               }}
             >
               <h2 style={{ fontSize: "20px", color: "#333" }}>{bundle.name}</h2>
@@ -212,7 +226,7 @@ const CardBundles = () => {
                   alt={bundle.name}
                   style={{ maxWidth: "100%", height: "auto" }}
                 />
-                {/* Repeat the above code fordifferent image fields */}
+                {/* Repeat the above code for different image fields */}
               </div>
             </li>
           ))}
